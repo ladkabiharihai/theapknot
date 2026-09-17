@@ -170,12 +170,12 @@ html[lang="hi"] .btn{letter-spacing:0;font-weight:400}
 .trim{position:absolute;top:40px;left:0;right:0;z-index:4;height:2px;background:var(--foil-gold);transition:transform 1.6s cubic-bezier(.7,0,.25,1)}
 .opener.is-parting .valance,.opener.is-parting .trim{transform:translateY(-120%)}
 .stage{position:absolute;inset:0;z-index:2;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;transition:opacity .8s ease,transform 1s ease}
-.stage-inner{min-height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.9rem;padding:5.4rem 1rem 2.8rem;box-sizing:border-box}
+.stage-inner{min-height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.9rem;padding:6.6rem 1rem 3rem;box-sizing:border-box}
 .opener.is-parting .stage{opacity:0;transform:scale(1.04)}
 .opener{transition:background-color 1.2s ease .3s}
 .opener.is-parting{background-color:transparent}
 .opener.is-gone{opacity:0;transition:opacity .6s ease}
-.opener-lang{position:absolute;top:70px;right:.9rem;z-index:5;transition:opacity .4s}
+.opener-lang{position:absolute;top:56px;right:.9rem;z-index:5;transition:opacity .4s}
 .opener-kicker{color:var(--gold-3);font-size:1rem;letter-spacing:.3em;text-transform:uppercase}
 html[lang="hi"] .opener-kicker{letter-spacing:.02em;text-transform:none;font-size:1.05rem}
 .card3d{position:relative;width:min(84vw,25rem,48vh);aspect-ratio:1;perspective:1800px;container-type:inline-size}
@@ -622,6 +622,7 @@ html[lang="hi"] .play-menu button b{font-weight:500}
 html[lang="hi"] .tour-bar .tour-label{letter-spacing:0}
 .tour-bar svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 .tour-bar .primary svg{stroke:#2A1A0C}
+html.tour-active .fab{transform:translateY(200%)!important;opacity:0!important;pointer-events:none!important}
 .tour-progress{position:fixed;top:0;left:0;right:0;z-index:33;height:2px;background:rgba(216,186,120,.25)}
 .tour-progress i{display:block;height:100%;width:0;background:var(--foil-gold);transition:width .5s ease}
 .tour-bar[hidden],.play-menu[hidden],.tour-progress[hidden]{display:none!important}
@@ -2784,7 +2785,7 @@ const Tour = (() => {
   }
   function stop() {
     playing = false; ended = false; clearTimeout(timer); cancelAnimationFrame(raf); raf = 0; lastTs = 0;
-    document.documentElement.classList.remove('tour-cinema');
+    document.documentElement.classList.remove('tour-cinema', 'tour-active');
     bar().classList.add('is-away');
     setTimeout(() => { bar().hidden = true; }, 360);
     prog().hidden = true;
@@ -2802,6 +2803,7 @@ const Tour = (() => {
     playing = true;
     prog().hidden = false; setProgress(0);
     const pb = $('#playBtn'); if (pb) pb.setAttribute('aria-pressed', 'true');
+    document.documentElement.classList.add('tour-active');
     buildBar();
     if (m === 'cinema') {
       document.documentElement.classList.add('tour-cinema');
