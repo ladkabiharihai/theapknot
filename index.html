@@ -628,6 +628,23 @@ html.tour-active .fab{transform:translateY(200%)!important;opacity:0!important;p
 .tour-bar[hidden],.play-menu[hidden],.tour-progress[hidden]{display:none!important}
 @media (prefers-reduced-motion:no-preference){html.tour-cinema{scroll-behavior:smooth}}
 
+/* ===== film ===== */
+.film{position:relative;margin:0 auto;max-width:56rem;aspect-ratio:16/9;border-radius:14px;overflow:hidden;
+  background:#0b0f0d;border:1px solid rgba(216,186,120,.35);box-shadow:var(--shadow)}
+@supports not (aspect-ratio:16/9){.film{height:0;padding-bottom:56.25%}}
+.film>iframe,.film>video,.film>.film-face{position:absolute;inset:0;width:100%;height:100%;border:0;display:block}
+.film>video{object-fit:contain;background:#0b0f0d}
+.film-face{margin:0;padding:0;cursor:pointer;background:#0b0f0d center/cover no-repeat;
+  display:flex;align-items:center;justify-content:center;color:var(--gold-3)}
+.film-face::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(6,10,8,.22),rgba(6,10,8,.62))}
+.film-play{position:relative;width:74px;height:74px;border-radius:50%;display:grid;place-items:center;
+  background:rgba(12,20,16,.55);border:1.5px solid var(--gold-2);transition:transform .25s ease,background .25s ease}
+.film-face:hover .film-play,.film-face:focus-visible .film-play{transform:scale(1.07);background:rgba(12,20,16,.78)}
+.film-play svg{width:26px;height:26px;margin-left:4px;fill:var(--gold-3)}
+.film-cap{text-align:center;margin-top:.9rem;font-size:1rem}
+@media (max-width:47.99rem){.film{border-radius:10px}.film-play{width:60px;height:60px}.film-play svg{width:21px;height:21px}}
+@media (prefers-reduced-motion:reduce){.film-play{transition:none}}
+
 /* ===== playlist ===== */
 .peacock{width:7.5rem;margin:1.6rem auto .4rem}
 .peacock svg{display:block;width:100%;height:auto;overflow:visible}
@@ -841,6 +858,20 @@ html[lang="hi"] .track-tag{letter-spacing:.02em}
         </div>
         <p class="muted" id="saveNote" style="margin-top:.6rem;font-size:.95rem"></p>
       </div>
+    </div>
+  </section>
+
+  <section class="ch ch-emerald" id="film" aria-labelledby="filmH" hidden>
+    <div class="edge"></div>
+    <div class="wrap">
+      <header class="ch-head reveal">
+        <p class="numeral"></p>
+        <h2 class="ch-title foil-gold" id="filmH" data-i18n="filmH"></h2>
+        <p class="ch-sub" data-i18n="filmSub"></p>
+        <span class="rule"><i></i></span>
+      </header>
+      <div class="film reveal" id="filmBox"></div>
+      <p class="film-cap muted reveal" id="filmCap"></p>
     </div>
   </section>
 
@@ -1168,19 +1199,54 @@ const CONFIG = {
 
 CONFIG.photos = CONFIG.photos || [];
 
+/* Music. Left as it is, the page plays its own soft instrumental and
+   changes motif from section to section. To use real recordings
+   instead, point these at audio you have the right to publish - a
+   commercial Bollywood or pop track is not free to host, so use your
+   own recording, a licensed copy, or a royalty-free piece.
+     src     one file for the whole page, e.g. 'audio/theme.m4a'
+     tracks  a file per mood, e.g. { gallery: 'audio/us.m4a' }
+             moods: opening gallery program journey playlist closing
+             'default' covers any mood you do not name
+     volume  0 to 1                                                     */
+CONFIG.audio = { src: '', tracks: {}, volume: .55 };
+
+/* Video. Fill in exactly one of these and a film section appears just
+   after the gallery. YouTube or Vimeo is the right answer for anything
+   long: GitHub rejects files over 100 MB and Pages caps a repo at 1 GB,
+   so a full wedding film cannot live in here.
+     youtube  share link or bare id, e.g. 'https://youtu.be/XXXXXXXXXXX'
+     vimeo    share link or bare id
+     src      a file beside this page, e.g. 'video/our-story.mp4'
+     poster   still shown before play - worth setting on a phone         */
+CONFIG.video = { youtube: '', vimeo: '', src: '', poster: '', caption: { en: '', hi: '' } };
+
 /* Songs for the couple's playlist. Each opens on YouTube — no audio is
    bundled with the page. Add or reorder freely; 'l' is the little chip. */
+/* Songs for the couple's playlist - slow ones, chosen to sit easy on
+   the ear. Each opens a YouTube search; no audio is bundled here.
+   Add or reorder freely; 'l' just sets the little language chip. */
 CONFIG.playlist = [
   { t: { en: 'Tum Se Hi', hi: 'तुम से ही' }, a: { en: 'Mohit Chauhan · Jab We Met', hi: 'मोहित चौहान · जब वी मेट' }, l: 'hi' },
-  { t: { en: 'Raabta', hi: 'राब्ता' }, a: { en: 'Arijit Singh', hi: 'अरिजीत सिंह' }, l: 'hi' },
-  { t: { en: 'Tera Ban Jaunga', hi: 'तेरा बन जाऊँगा' }, a: { en: 'Akhil Sachdeva · Tulsi Kumar', hi: 'अखिल सचदेवा · तुलसी कुमार' }, l: 'hi' },
   { t: { en: 'Pehla Nasha', hi: 'पहला नशा' }, a: { en: 'Udit Narayan · Sadhana Sargam', hi: 'उदित नारायण · साधना सरगम' }, l: 'hi' },
-  { t: { en: 'Din Shagna Da', hi: 'दिन शगना दा' }, a: { en: 'Jasleen Royal', hi: 'जसलीन रॉयल' }, l: 'hi' },
+  { t: { en: 'Agar Tum Saath Ho', hi: 'अगर तुम साथ हो' }, a: { en: 'Arijit Singh · Alka Yagnik', hi: 'अरिजीत सिंह · अल्का याज्ञिक' }, l: 'hi' },
+  { t: { en: 'Raabta', hi: 'राब्ता' }, a: { en: 'Arijit Singh', hi: 'अरिजीत सिंह' }, l: 'hi' },
   { t: { en: 'Kabira', hi: 'कबिरा' }, a: { en: 'Tochi Raina · Rekha Bhardwaj', hi: 'तोची रैना · रेखा भारद्वाज' }, l: 'hi' },
+  { t: { en: 'Tere Bina', hi: 'तेरे बिना' }, a: { en: 'A. R. Rahman · Chinmayi', hi: 'ए. आर. रहमान · चिन्मयी' }, l: 'hi' },
+  { t: { en: 'Tujh Mein Rab Dikhta Hai', hi: 'तुझ में रब दिखता है' }, a: { en: 'Roop Kumar Rathod', hi: 'रूप कुमार राठौड़' }, l: 'hi' },
+  { t: { en: 'Bol Na Halke Halke', hi: 'बोल ना हल्के हल्के' }, a: { en: 'Rahat Fateh Ali Khan', hi: 'राहत फ़तेह अली ख़ान' }, l: 'hi' },
+  { t: { en: 'Din Shagna Da', hi: 'दिन शगना दा' }, a: { en: 'Jasleen Royal', hi: 'जसलीन रॉयल' }, l: 'hi' },
+  { t: { en: 'Saibo', hi: 'साइबो' }, a: { en: 'Shreya Ghoshal · Tochi Raina', hi: 'श्रेया घोषाल · तोची रैना' }, l: 'hi' },
+  { t: { en: 'Kesariya', hi: 'केसरिया' }, a: { en: 'Arijit Singh', hi: 'अरिजीत सिंह' }, l: 'hi' },
+  { t: { en: 'Apna Bana Le', hi: 'अपना बना ले' }, a: { en: 'Arijit Singh', hi: 'अरिजीत सिंह' }, l: 'hi' },
+  { t: { en: 'Chaudhary', hi: 'चौधरी' }, a: { en: 'Amit Trivedi · Mame Khan', hi: 'अमित त्रिवेदी · मामे ख़ान' }, l: 'hi' },
   { t: { en: 'Perfect', hi: 'Perfect' }, a: { en: 'Ed Sheeran', hi: 'एड शीरन' }, l: 'en' },
+  { t: { en: 'Can\'t Help Falling in Love', hi: 'Can\'t Help Falling in Love' }, a: { en: 'Elvis Presley', hi: 'एल्विस प्रेस्ली' }, l: 'en' },
   { t: { en: 'A Thousand Years', hi: 'A Thousand Years' }, a: { en: 'Christina Perri', hi: 'क्रिस्टीना पेरी' }, l: 'en' },
-  { t: { en: "Can't Help Falling in Love", hi: "Can't Help Falling in Love" }, a: { en: 'Elvis Presley', hi: 'एल्विस प्रेस्ली' }, l: 'en' },
-  { t: { en: 'All of Me', hi: 'All of Me' }, a: { en: 'John Legend', hi: 'जॉन लीजेंड' }, l: 'en' }
+  { t: { en: 'Make You Feel My Love', hi: 'Make You Feel My Love' }, a: { en: 'Adele', hi: 'अडेल' }, l: 'en' },
+  { t: { en: 'Come Away With Me', hi: 'Come Away With Me' }, a: { en: 'Norah Jones', hi: 'नोरा जोन्स' }, l: 'en' },
+  { t: { en: 'Your Song', hi: 'Your Song' }, a: { en: 'Elton John', hi: 'एल्टन जॉन' }, l: 'en' },
+  { t: { en: 'At Last', hi: 'At Last' }, a: { en: 'Etta James', hi: 'एटा जेम्स' }, l: 'en' }
 ];
 
 /* =====================================================================
@@ -1364,7 +1430,8 @@ const T = {
     tourPause: 'रोकें', tourResume: 'चलाएँ', tourExit: 'बंद करें', tourPrev: 'पिछला', tourNext: 'अगला',
     tourStep: '{i} / {n}', tourEnd: 'शुभम्',
     playlistH: 'हमारी धुनें', playlistSub: 'हमारी कहानी के गीत', listen: 'सुनें',
-    playlistNote: 'हर गाना YouTube पर खुलेगा। अपनी पसंद का गीत जोड़वाना चाहें तो बताइए ♥'
+    playlistNote: 'हर गाना YouTube पर खुलेगा। अपनी पसंद का गीत जोड़वाना चाहें तो बताइए ♥',
+    filmH: 'हमारी फ़िल्म', filmSub: 'चलती-फिरती एक झलक', filmPlay: 'फ़िल्म चलाएँ'
   },
   en: {
     docTitle: 'Shubh Vivah: Ashish & Pragati', langGroup: 'Language', andWord: 'and', sang: '&', amp: 'weds',
@@ -1454,7 +1521,8 @@ const T = {
     tourPause: 'Pause', tourResume: 'Play', tourExit: 'Close', tourPrev: 'Previous', tourNext: 'Next',
     tourStep: '{i} / {n}', tourEnd: 'The End',
     playlistH: 'Our Playlist', playlistSub: 'the songs of our story', listen: 'Listen',
-    playlistNote: 'Each song opens on YouTube. Tell us if you would like your favourite added ♥'
+    playlistNote: 'Each song opens on YouTube. Tell us if you would like your favourite added ♥',
+    filmH: 'Our Film', filmSub: 'a glimpse, in motion', filmPlay: 'Play the film'
   }
 };
 
@@ -1755,107 +1823,188 @@ const SIDE_ART = {
 };
 const LANG_ORN = ['crest', 'crestInk', 'seal'];
 
-/* ---------- sound: synthesised shehnai with dholak ---------- */
+/* ---------- sound: a soft instrumental that follows the page ----------
+   The old voice was a sawtooth and a square through a narrow bandpass
+   with a noise-burst dholak over it; that edge is what made it harsh.
+   This one uses sine and triangle partials only, a fourth lower and
+   half again slower, fed through a generated convolver reverb so it
+   sits back in the room instead of in your ear. Each part of the page
+   gets its own motif and Music.mood(id) crossfades to it as you scroll.
+
+   To play real recordings instead, fill in CONFIG.audio - see the note
+   beside it. The synth then steps aside entirely.                      */
 const Music = (() => {
   const AC = window.AudioContext || window.webkitAudioContext;
-  let ctx = null, master = null, noise = null, playing = false, timer = 0, nextAt = 0, nodes = [];
-  const SA = 293.66, BEAT = 0.42;
-  const R = { S: 1, R: 9 / 8, G: 5 / 4, M: 4 / 3, P: 3 / 2, D: 5 / 3, N: 15 / 8, S2: 2, R2: 9 / 4 };
-  const TUNE = [
-    ['P', 1], ['D', .5], ['P', .5], ['G', 1], ['R', .5], ['G', .5], ['P', 2], [null, .5], ['G', .5], ['P', .5], ['D', .5], ['S2', 1.5], ['N', .5], ['D', .5], ['P', 2], [null, 1],
-    ['S2', .5], ['R2', .5], ['S2', .5], ['N', .5], ['D', 1], ['P', .5], ['D', .5], ['P', 2], [null, .5], ['D', .5], ['P', .5], ['G', .5], ['R', .5], ['G', 1], ['R', .5], ['S', .5], ['R', 2], [null, .5],
-    ['G', .5], ['P', .5], ['G', .5], ['R', .5], ['S', 3], [null, 1.5]
-  ];
-  const TOTAL = TUNE.reduce((s, x) => s + x[1], 0);
-  const DHOL = ['B', '', 'S', 'B', 'B', '', 'S', 's'];
+  let ctx = null, master = null, dry = null, verb = null, playing = false,
+      timer = 0, nextAt = 0, nodes = [], mood = 'opening', el = null, fadeT = 0;
+
+  const SA = 261.63;   /* C4, a fourth below the old shehnai */
+  const BEAT = 0.62;   /* was 0.42 */
+  const R = { S: 1, r: 16 / 15, R: 9 / 8, g: 6 / 5, G: 5 / 4, M: 4 / 3, P: 3 / 2,
+              d: 8 / 5, D: 5 / 3, n: 9 / 5, N: 15 / 8, S2: 2, R2: 9 / 4 };
+
+  /* Slow, stepwise and mostly consonant - what makes a line read as
+     calm rather than busy. One per part of the page. */
+  const MOTIFS = {
+    opening:  [['P',2],['G',1.5],['M',.5],['P',3],[null,1],['G',1.5],['R',.5],['S',3],[null,2]],
+    gallery:  [['S',1.5],['R',.5],['G',2],['M',1],['G',1],['R',2],[null,1],['G',1],['P',1],['M',2],['G',2],[null,2]],
+    program:  [['M',2],['P',1],['D',1],['P',3],[null,1],['M',1],['G',1],['R',2],['S',3],[null,1.5]],
+    journey:  [['G',1],['M',1],['P',2],['D',1],['N',1],['S2',3],[null,1],['N',1],['D',1],['P',3],[null,1.5]],
+    playlist: [['P',1.5],['D',.5],['N',1],['S2',2],[null,.5],['N',1],['D',1],['P',2],['M',1],['G',3],[null,2]],
+    closing:  [['S2',2],['N',1],['D',2],['P',2],[null,1],['G',1],['R',1],['S',4],[null,2]]
+  };
+  const BY_SECTION = { status:'opening', gallery:'gallery', film:'gallery', program:'program',
+                       journey:'journey', madhavi:'journey', playlist:'playlist', quiz:'gallery',
+                       guide:'program', rsvp:'closing', host:'closing' };
+
+  const A = () => CONFIG.audio || {};
+  const fileFor = m => { const a = A(); return (a.tracks && (a.tracks[m] || a.tracks.default)) || a.src || ''; };
+  const useFiles = () => !!fileFor(mood);
+
+  function impulse(secs, decay) {
+    const rate = ctx.sampleRate, len = Math.max(1, Math.floor(rate * secs));
+    const buf = ctx.createBuffer(2, len, rate);
+    for (let c = 0; c < 2; c++) {
+      const d = buf.getChannelData(c);
+      for (let i = 0; i < len; i++) d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / len, decay);
+    }
+    return buf;
+  }
   function setup() {
     if (ctx) return true;
     if (!AC) return false;
     try { ctx = new AC(); } catch (e) { return false; }
     master = ctx.createGain(); master.gain.value = 0;
     const comp = ctx.createDynamicsCompressor();
+    try { comp.threshold.value = -22; comp.ratio.value = 2.6; comp.attack.value = .03; comp.release.value = .4; } catch (e) { /* defaults */ }
+    dry = ctx.createGain(); dry.gain.value = .74;
+    verb = ctx.createGain(); verb.gain.value = .5;
+    dry.connect(master);
+    try { const conv = ctx.createConvolver(); conv.buffer = impulse(2.8, 2.6); verb.connect(conv); conv.connect(master); }
+    catch (e) { verb.connect(master); }   /* no convolver: just run dry */
     master.connect(comp); comp.connect(ctx.destination);
-    const len = Math.floor(ctx.sampleRate * .25);
-    noise = ctx.createBuffer(1, len, ctx.sampleRate);
-    const d = noise.getChannelData(0);
-    for (let i = 0; i < len; i++) d[i] = Math.random() * 2 - 1;
     return true;
   }
   const track = n => { nodes.push(n); n.onended = () => { nodes = nodes.filter(x => x !== n); }; return n; };
-  function bass(tt, v) {
-    const o = track(ctx.createOscillator()), g = ctx.createGain();
-    o.type = 'sine'; o.frequency.setValueAtTime(170, tt); o.frequency.exponentialRampToValueAtTime(58, tt + .2);
-    g.gain.setValueAtTime(.0001, tt); g.gain.exponentialRampToValueAtTime(v, tt + .01); g.gain.exponentialRampToValueAtTime(.0001, tt + .38);
-    o.connect(g); g.connect(master); o.start(tt); o.stop(tt + .42);
+  const send = n => { n.connect(dry); n.connect(verb); };
+  const hold = (p, at) => (p.cancelAndHoldAtTime ? p.cancelAndHoldAtTime(at) : p.cancelScheduledValues(at));
+
+  /* A tonic-and-fifth drone that swells underneath the line. */
+  function pad(t0, t1) {
+    [[SA / 2, .05, 'sine'], [SA * 3 / 4, .032, 'triangle'], [SA, .016, 'sine']].forEach(([f, v, ty], i) => {
+      const o = track(ctx.createOscillator()), g = ctx.createGain();
+      o.type = ty; o.frequency.value = f * (1 + (i - 1) * .0012);  /* a touch of detune for warmth */
+      g.gain.setValueAtTime(0, t0);
+      g.gain.linearRampToValueAtTime(v, t0 + 2.2);
+      g.gain.setValueAtTime(v, Math.max(t0 + 2.3, t1 - .8));
+      g.gain.linearRampToValueAtTime(0, t1 + 1.6);
+      o.connect(g); send(g); o.start(t0); o.stop(t1 + 1.8);
+    });
   }
-  function slap(tt, v) {
-    const s = track(ctx.createBufferSource()), f = ctx.createBiquadFilter(), g = ctx.createGain();
-    s.buffer = noise; f.type = 'bandpass'; f.frequency.value = 1900; f.Q.value = 1.1;
-    g.gain.setValueAtTime(v, tt); g.gain.exponentialRampToValueAtTime(.0001, tt + .09);
-    s.connect(f); f.connect(g); g.connect(master); s.start(tt); s.stop(tt + .12);
-  }
-  function phrase(t0) {
-    const o1 = track(ctx.createOscillator()), o2 = track(ctx.createOscillator()), lfo = track(ctx.createOscillator());
-    o1.type = 'sawtooth'; o2.type = 'square';
-    const mix2 = ctx.createGain(); mix2.gain.value = .28;
-    const bp = ctx.createBiquadFilter(); bp.type = 'bandpass'; bp.frequency.value = 1350; bp.Q.value = .8;
-    const lp = ctx.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 3400;
+  /* One legato line: sine fundamental, quiet triangle octave and a
+     fifth, rounded by a lowpass. Vibrato eases in so notes do not
+     start on a wobble. */
+  function phrase(t0, tune) {
+    const o1 = track(ctx.createOscillator()), o2 = track(ctx.createOscillator()),
+          o3 = track(ctx.createOscillator()), lfo = track(ctx.createOscillator());
+    o1.type = 'sine'; o2.type = 'triangle'; o3.type = 'sine'; lfo.type = 'sine';
+    const g2 = ctx.createGain(); g2.gain.value = .15;
+    const g3 = ctx.createGain(); g3.gain.value = .06;
+    const lp = ctx.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 1900; lp.Q.value = .5;
     const amp = ctx.createGain(); amp.gain.value = 0;
-    lfo.frequency.value = 5.3;
-    const depth = ctx.createGain(); depth.gain.value = 4.5;
+    lfo.frequency.value = 4.1;
+    const depth = ctx.createGain();
+    depth.gain.setValueAtTime(0, t0); depth.gain.linearRampToValueAtTime(1.6, t0 + 1.4);
     lfo.connect(depth); depth.connect(o1.frequency); depth.connect(o2.frequency);
-    o1.connect(bp); o2.connect(mix2); mix2.connect(bp); bp.connect(lp); lp.connect(amp); amp.connect(master);
+    o1.connect(lp); o2.connect(g2); g2.connect(lp); o3.connect(g3); g3.connect(lp);
+    lp.connect(amp); send(amp);
+
     let tt = t0, fresh = true;
-    for (const [sw, beats] of TUNE) {
+    for (const [sw, beats] of tune) {
       const dur = beats * BEAT;
-      if (!sw) { amp.gain.setTargetAtTime(0, tt, .06); tt += dur; fresh = true; continue; }
+      if (!sw) { amp.gain.setTargetAtTime(0, tt, .12); tt += dur; fresh = true; continue; }
       const f = SA * R[sw];
-      if (fresh) { o1.frequency.setValueAtTime(f, tt); o2.frequency.setValueAtTime(f * 1.004, tt); amp.gain.setTargetAtTime(.2, tt, .05); }
-      else { o1.frequency.setTargetAtTime(f, tt, .03); o2.frequency.setTargetAtTime(f * 1.004, tt, .03); amp.gain.setTargetAtTime(.2, tt, .02); }
-      amp.gain.setTargetAtTime(.13, tt + dur * .78, .05);
+      if (fresh) {
+        o1.frequency.setValueAtTime(f, tt); o2.frequency.setValueAtTime(f * 2, tt); o3.frequency.setValueAtTime(f * 3, tt);
+        amp.gain.setTargetAtTime(.17, tt, .16);      /* slow, breathy attack */
+      } else {
+        o1.frequency.setTargetAtTime(f, tt, .07);    /* gentle glide between notes */
+        o2.frequency.setTargetAtTime(f * 2, tt, .07);
+        o3.frequency.setTargetAtTime(f * 3, tt, .07);
+        amp.gain.setTargetAtTime(.17, tt, .09);
+      }
+      amp.gain.setTargetAtTime(.12, tt + dur * .72, .1);
       fresh = false; tt += dur;
     }
-    amp.gain.setTargetAtTime(0, tt, .08);
-    [o1, o2, lfo].forEach(o => { o.start(t0); o.stop(tt + .8); });
-    [[SA / 2, .05], [SA * 3 / 4, .03]].forEach(([f, v]) => {
-      const o = track(ctx.createOscillator()), g = ctx.createGain();
-      o.type = 'triangle'; o.frequency.value = f;
-      g.gain.setValueAtTime(0, t0); g.gain.linearRampToValueAtTime(v, t0 + 1.2); g.gain.setValueAtTime(v, Math.max(t0 + 1.3, tt - .4)); g.gain.linearRampToValueAtTime(0, tt + .6);
-      o.connect(g); g.connect(master); o.start(t0); o.stop(tt + .8);
-    });
-    const step = BEAT / 2;
-    for (let i = 0; i < TOTAL * 2; i++) {
-      const kind = DHOL[i % 8], at = t0 + i * step;
-      if (kind === 'B') bass(at, .42); else if (kind === 'S') slap(at, .2); else if (kind === 's') slap(at, .1);
-    }
+    amp.gain.setTargetAtTime(0, tt, .2);
+    [o1, o2, o3, lfo].forEach(o => { o.start(t0); o.stop(tt + 2.2); });
+    pad(t0, tt);
     return tt;
   }
   function loop() {
     if (!playing) return;
-    nextAt = phrase(Math.max(ctx.currentTime + .05, nextAt)) + .2;
-    timer = setTimeout(loop, Math.max(200, (nextAt - ctx.currentTime - 1.2) * 1000));
+    nextAt = phrase(Math.max(ctx.currentTime + .08, nextAt), MOTIFS[mood] || MOTIFS.opening) + 1.1;
+    timer = setTimeout(loop, Math.max(300, (nextAt - ctx.currentTime - 1.6) * 1000));
   }
-  const hold = (p, at) => (p.cancelAndHoldAtTime ? p.cancelAndHoldAtTime(at) : p.cancelScheduledValues(at));
+  /* --- real recordings, when CONFIG.audio supplies them --- */
+  function ramp(to) {
+    clearInterval(fadeT);
+    fadeT = setInterval(() => {
+      if (!el) { clearInterval(fadeT); return; }
+      const d = to - el.volume;
+      if (Math.abs(d) < .03) {
+        el.volume = Math.max(0, Math.min(1, to)); clearInterval(fadeT);
+        if (to === 0) { try { el.pause(); } catch (e) { /* already stopped */ } }
+        return;
+      }
+      el.volume = Math.max(0, Math.min(1, el.volume + d * .18));
+    }, 60);
+  }
+  function fileStart() {
+    const src = fileFor(mood);
+    if (!src) return false;
+    if (!el) { el = new Audio(); el.loop = true; el.preload = 'none'; }
+    let want = src; try { want = new URL(src, location.href).href; } catch (e) { /* relative is fine */ }
+    if (el.src !== want) { el.src = src; el.volume = 0; }
+    const p = el.play(); if (p && p.catch) p.catch(() => {});
+    const v = A().volume; ramp(v == null ? .55 : v);
+    return true;
+  }
+
   return {
-    supported: !!AC,
+    supported: !!AC || typeof Audio !== 'undefined',
     get playing() { return playing; },
+    /* Crossfade to the motif (or track) belonging to a section. */
+    mood(id) {
+      const m = BY_SECTION[id] || id;
+      if (m === mood || (!MOTIFS[m] && !fileFor(m))) return;
+      mood = m;
+      if (playing && useFiles()) fileStart();
+      /* the synth picks the new motif up on its next phrase - no restart */
+    },
     start() {
+      if (useFiles()) { playing = true; return fileStart(); }
       if (!setup()) return false;
       if (ctx.resume) { const p = ctx.resume(); if (p && p.catch) p.catch(() => {}); }
       if (playing) return true;
-      playing = true; nextAt = ctx.currentTime + .1;
+      playing = true; nextAt = ctx.currentTime + .15;
       hold(master.gain, ctx.currentTime);
-      master.gain.setTargetAtTime(.55, ctx.currentTime, .4);
+      master.gain.setTargetAtTime(.34, ctx.currentTime, .8);   /* was .55, and eases in slower */
       loop();
       return true;
     },
     stop() {
-      if (!ctx || !playing) return;
+      if (!playing) return;
       playing = false; clearTimeout(timer);
+      if (el) ramp(0);
+      if (!ctx) return;
       hold(master.gain, ctx.currentTime);
-      master.gain.setTargetAtTime(0, ctx.currentTime, .12);
+      master.gain.setTargetAtTime(0, ctx.currentTime, .25);
       const old = nodes.slice(); nodes = [];
-      setTimeout(() => { old.forEach(o => { try { o.stop(); } catch (e) { /* done */ } }); if (!playing && ctx.suspend) ctx.suspend().catch(() => {}); }, 500);
+      setTimeout(() => {
+        old.forEach(o => { try { o.stop(); } catch (e) { /* already done */ } });
+        if (!playing && ctx.suspend) ctx.suspend().catch(() => {});
+      }, 1200);
     }
   };
 })();
@@ -2365,6 +2514,64 @@ function renderGuide() {
   });
 }
 
+/* ---------- film ---------- */
+/* Accepts a share link or a bare id, so nobody has to dig the id out. */
+function ytId(v) {
+  const x = String(v || '').trim(); if (!x) return '';
+  const m = x.match(/(?:youtu\.be\/|[?&]v=|\/embed\/|\/shorts\/|\/live\/)([A-Za-z0-9_-]{6,})/);
+  return m ? m[1] : (/^[A-Za-z0-9_-]{6,}$/.test(x) ? x : '');
+}
+function vmId(v) {
+  const x = String(v || '').trim(); if (!x) return '';
+  const m = x.match(/vimeo\.com\/(?:video\/|channels\/[^/]+\/)?(\d+)/);
+  return m ? m[1] : (/^\d+$/.test(x) ? x : '');
+}
+function renderFilm() {
+  const V = CONFIG.video || {};
+  const sec = $('#film'), box = $('#filmBox'), cap = $('#filmCap');
+  if (!sec || !box) return;
+  const yt = ytId(V.youtube), vm = vmId(V.vimeo), file = String(V.src || '').trim();
+  if (!yt && !vm && !file) { sec.hidden = true; box.textContent = ''; return; }
+  sec.hidden = false;
+  box.textContent = '';
+  if (cap) cap.textContent = V.caption ? (V.caption[state.lang] || V.caption.en || '') : '';
+  const quiet = () => { if (Music.playing) { Music.stop(); updateMusicBtn(); } };
+
+  if (file) {
+    const v = document.createElement('video');
+    v.src = file; v.controls = true; v.preload = 'metadata';
+    v.playsInline = true;                         /* iOS: stay inline, do not go fullscreen */
+    v.setAttribute('playsinline', ''); v.setAttribute('webkit-playsinline', '');
+    if (V.poster) v.poster = V.poster;
+    v.addEventListener('play', quiet);
+    box.appendChild(v);
+    return;
+  }
+  /* A facade, not the iframe itself: nothing is fetched from YouTube or
+     Vimeo until the guest asks for it, which keeps the first paint light
+     on a phone and sets no third-party cookie for anyone who never taps. */
+  const face = document.createElement('button');
+  face.type = 'button'; face.className = 'film-face';
+  face.setAttribute('aria-label', t('filmPlay'));
+  const poster = V.poster || (yt ? 'https://i.ytimg.com/vi/' + yt + '/hqdefault.jpg' : '');
+  if (poster) face.style.backgroundImage = 'url("' + poster + '")';
+  const play = document.createElement('span'); play.className = 'film-play';
+  play.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 5v14l11-7z"/></svg>';
+  face.appendChild(play);
+  face.addEventListener('click', () => {
+    quiet();
+    const f = document.createElement('iframe');
+    f.src = yt ? 'https://www.youtube-nocookie.com/embed/' + yt + '?autoplay=1&rel=0&playsinline=1'
+               : 'https://player.vimeo.com/video/' + vm + '?autoplay=1';
+    f.title = t('filmH');
+    f.loading = 'lazy';
+    f.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+    f.setAttribute('allowfullscreen', '');
+    box.textContent = ''; box.appendChild(f);
+  });
+  box.appendChild(face);
+}
+
 /* ---------- playlist ---------- */
 const DISC = '<svg class="disc" viewBox="0 0 40 40" aria-hidden="true" focusable="false"><circle cx="20" cy="20" r="19" fill="#170f0c" stroke="var(--gold-2)" stroke-width="1"/><g class="spin"><circle cx="20" cy="20" r="15" fill="none" stroke="rgba(216,186,120,.22)"/><circle cx="20" cy="20" r="11.5" fill="none" stroke="rgba(216,186,120,.18)"/><circle cx="20" cy="20" r="8" fill="none" stroke="rgba(216,186,120,.22)"/><circle cx="20" cy="6.4" r="1.2" fill="var(--gold-3)"/></g><circle cx="20" cy="20" r="4.4" fill="var(--gold-2)"/><circle cx="20" cy="20" r="1.3" fill="#170f0c"/></svg>';
 const GO = '<svg class="go" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" d="M8 5l7 7-7 7"/></svg>';
@@ -2599,7 +2806,7 @@ function renderAll() {
   applyI18n();
   applySideDom();
   renderOpener(); renderHero(); renderStatus(true); renderFamilies(); Gallery.render(); renderRituals(); renderJourney(true);
-  renderQuiz(); renderGuide(); renderPlaylist(); renderRsvp(); renderPeople(); renderFooter(); renderHost();
+  renderQuiz(); renderGuide(); renderFilm(); renderPlaylist(); renderRsvp(); renderPeople(); renderFooter(); renderHost();
   renumber();
 }
 function setLang(lang, persist) {
@@ -2860,6 +3067,16 @@ function init() {
   document.addEventListener('click', e => { const b = e.target.closest('[data-lang-btn]'); if (b) setLang(b.dataset.langBtn, true); });
   if (!Music.supported) $('#musicBtn').hidden = true;
   $('#musicBtn').addEventListener('click', () => { if (Music.playing) Music.stop(); else Music.start(); updateMusicBtn(); });
+  /* Let the instrumental follow the guest down the page: whichever
+     section is most in view picks the motif. */
+  if (Music.supported && 'IntersectionObserver' in window) {
+    const moodIO = new IntersectionObserver(es => {
+      let best = null;
+      es.forEach(e => { if (e.isIntersecting && (!best || e.intersectionRatio > best.intersectionRatio)) best = e; });
+      if (best && best.target.id) Music.mood(best.target.id);
+    }, { threshold: [.3, .55, .8] });
+    $$('section[id]').forEach(el => moodIO.observe(el));
+  }
   document.addEventListener('visibilitychange', () => {
     if (document.hidden) { if (Music.playing) { state.resumeMusic = true; Music.stop(); updateMusicBtn(); } }
     else if (state.resumeMusic) { state.resumeMusic = false; Music.start(); updateMusicBtn(); }
