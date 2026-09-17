@@ -629,6 +629,10 @@ html.tour-active .fab{transform:translateY(200%)!important;opacity:0!important;p
 @media (prefers-reduced-motion:no-preference){html.tour-cinema{scroll-behavior:smooth}}
 
 /* ===== film ===== */
+.film-block{margin:2.6rem auto 0;max-width:56rem;text-align:center}
+.film-h{font-family:var(--display);font-size:clamp(1.5rem,4.4vw,2.1rem);font-weight:500;margin:0 0 .15rem}
+.film-sub{margin:0 0 1.1rem;font-size:1rem}
+@media (max-width:47.99rem){.film-block{margin-top:2rem}}
 .film{position:relative;margin:0 auto;max-width:56rem;aspect-ratio:16/9;border-radius:14px;overflow:hidden;
   background:#0b0f0d;border:1px solid rgba(216,186,120,.35);box-shadow:var(--shadow)}
 @supports not (aspect-ratio:16/9){.film{height:0;padding-bottom:56.25%}}
@@ -839,6 +843,12 @@ html[lang="hi"] .track-tag{letter-spacing:.02em}
       </header>
       <div class="portrait reveal" id="portrait"></div>
       <p class="portrait-cap reveal" id="portraitCap"></p>
+      <div class="film-block reveal" id="film" hidden>
+        <h3 class="film-h foil-gold" id="filmH" data-i18n="filmH"></h3>
+        <p class="film-sub muted" data-i18n="filmSub"></p>
+        <div class="film" id="filmBox"></div>
+        <p class="film-cap muted" id="filmCap"></p>
+      </div>
     </div>
     <div class="strip-wrap reveal" id="stripWrap">
       <ul class="strip" id="strip"></ul>
@@ -858,20 +868,6 @@ html[lang="hi"] .track-tag{letter-spacing:.02em}
         </div>
         <p class="muted" id="saveNote" style="margin-top:.6rem;font-size:.95rem"></p>
       </div>
-    </div>
-  </section>
-
-  <section class="ch ch-emerald" id="film" aria-labelledby="filmH" hidden>
-    <div class="edge"></div>
-    <div class="wrap">
-      <header class="ch-head reveal">
-        <p class="numeral"></p>
-        <h2 class="ch-title foil-gold" id="filmH" data-i18n="filmH"></h2>
-        <p class="ch-sub" data-i18n="filmSub"></p>
-        <span class="rule"><i></i></span>
-      </header>
-      <div class="film reveal" id="filmBox"></div>
-      <p class="film-cap muted reveal" id="filmCap"></p>
     </div>
   </section>
 
