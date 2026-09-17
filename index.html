@@ -1349,7 +1349,7 @@ const T = {
     music: 'शहनाई और ढोलक', venueShort: 'सोनवानी मैरिज लॉन, लखनऊ', scroll: 'नीचे देखें', monoA: 'आ', monoB: 'प्र', year: '२०२६',
     untilEvent: '{event} में',
     days: 'दिन', hours: 'घंटे', minutes: 'मिनट', seconds: 'सेकंड', day1: 'दिन', hour1: 'घंटा', minute1: 'मिनट', second1: 'सेकंड',
-    firstRasm: 'पहली रस्म: {date}, {time} ({event})',
+    firstRasm: 'पहली रस्म: {date}{time} ({event})',
     happeningNow: 'अभी चल रहा है', upNext: 'इसके बाद', directions: 'रास्ता देखें', openMaps: 'मैप में खोलें',
     todayVivah: 'आज शुभ विवाह है', todayVivahP: 'सोनवानी मैरिज लॉन, लखनऊ में आपकी प्रतीक्षा है।',
     thanksH: 'आशीर्वाद के लिए हृदय से आभार', thanksP: 'विवाह सम्पन्न हुआ। आप सामने रहे या मन से, आपका स्नेह हमारे साथ रहा।',
@@ -1437,7 +1437,7 @@ const T = {
     music: 'Shehnai and dholak', venueShort: 'Sonwani Marriage Lawn, Lucknow', scroll: 'Scroll', monoA: 'A', monoB: 'P', year: 'MMXXVI',
     untilEvent: 'Until the {event}',
     days: 'Days', hours: 'Hours', minutes: 'Minutes', seconds: 'Seconds', day1: 'Day', hour1: 'Hour', minute1: 'Minute', second1: 'Second',
-    firstRasm: 'The first ceremony: {date}, {time} ({event})',
+    firstRasm: 'The first ceremony: {date}{time} ({event})',
     happeningNow: 'Happening now', upNext: 'Up next', directions: 'Directions', openMaps: 'Open in Maps',
     todayVivah: 'The wedding is today', todayVivahP: 'We await you at Sonwani Marriage Lawn, Lucknow.',
     thanksH: 'With gratitude for your blessings', thanksP: 'The wedding is complete. Whether you were there in person or in spirit, your love was with us.',
@@ -1594,14 +1594,21 @@ function fmtTime(ms, lang = state.lang) {
   if (lang === 'hi') { const per = hr < 4 ? 'रात्रि' : hr < 12 ? 'प्रातः' : hr < 16 ? 'दोपहर' : hr < 20 ? 'संध्या' : 'रात्रि'; return `${per} ${h12}${mi !== '00' ? ':' + mi : ''} बजे`; }
   return `${h12}:${mi} ${hr < 12 ? 'AM' : 'PM'}`;
 }
-const timeLabel = ev => (ev.allDay || ev.timeTbc ? t('auspicious') : fmtTime(ev.t0));
+/* Dates carry the programme now. The only clock time the invitation
+   still prints is the baraat's departure, which guests travel for. */
+const timeLabel = ev => (ev.key === 'baraat' ? fmtTime(ev.t0)
+  : (ev.allDay || ev.timeTbc ? t('auspicious') : ''));
 const numLocal = n => (state.lang === 'hi' ? new Intl.NumberFormat('hi-IN-u-nu-deva').format(n) : String(n));
 const dayMs = iso => Date.parse(`${iso}T12:00:00+05:30`);
 function cardDate(ms) {
   const d = new Intl.DateTimeFormat('en-GB', { timeZone: TZ, day: '2-digit', month: '2-digit', year: 'numeric' }).format(new Date(ms)).replace(/\//g, '.');
   return t('cvDate', { d, w: fmtWD(ms) });
 }
-const whenText = ev => (istDay(ev.t0) === istDay(now()) ? timeLabel(ev) : `${fmtDM(ev.t0)}, ${timeLabel(ev)}`);
+const whenText = ev => {
+  const tl = timeLabel(ev), d = fmtDM(ev.t0);
+  if (istDay(ev.t0) === istDay(now())) return tl || d;
+  return tl ? `${d}, ${tl}` : d;
+};
 const orderNames = () => (state.side === 'bride' ? [CONFIG.bride, CONFIG.groom] : [CONFIG.groom, CONFIG.bride]);
 const couple = (lang = state.lang) => { const [a, b] = orderNames(); return `${L(a, lang)} ${t('amp', null, lang)} ${L(b, lang)}`; };
 
@@ -2188,7 +2195,7 @@ function renderStatus(force) {
   if (ph.phase === 'before') {
     const main = mainEv(), first = EVENTS[0];
     w.append(h('h2', { id: 'statusH', text: L(main.cd) || t('untilEvent', { event: L(main.name) }) }), h('span', { class: 'rule' }, h('i')), clockEl(main.t0),
-      h('p', { class: 'status-note', text: t('firstRasm', { date: fmtDM(first.t0), time: timeLabel(first), event: L(first.name) }) }));
+      h('p', { class: 'status-note', text: t('firstRasm', { date: fmtDM(first.t0), time: timeLabel(first) ? ', ' + timeLabel(first) : '', event: L(first.name) }) }));
   } else if (cur && cur.key === 'vivah') {
     w.append(h('h2', { id: 'statusH', text: t('todayVivah') }), h('span', { class: 'rule' }, h('i')), h('p', { class: 'place', text: t('todayVivahP') }), h('div', { class: 'actions' }, directionsBtn(cur, true)));
   } else if (cur) {
@@ -2364,7 +2371,7 @@ function renderRituals() {
       icon,
       h('p', { class: 'rit-date', text: fmtLong(ev.t0) }),
       h('h3', { text: L(ev.name) }),
-      h('p', { class: 'rit-time', text: timeLabel(ev) }),
+      timeLabel(ev) ? h('p', { class: 'rit-time', text: timeLabel(ev) }) : null,
       h('p', { class: 'rit-place', text: `${L(pl.name)}, ${L(pl.addr)}` }),
       ev.note ? h('p', { class: 'rit-note', text: L(ev.note) }) : null,
       actions));
