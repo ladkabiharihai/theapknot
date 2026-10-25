@@ -349,7 +349,10 @@ html[lang="hi"] .parinay .word{font-family:"Amita",serif;font-size:clamp(2rem,8v
 .portrait{position:relative;width:min(78vw,22rem);margin:0 auto;aspect-ratio:3/4}
 .portrait .frame{position:absolute;inset:0;padding:12px;background:var(--foil-gold);background-size:200% 200%;border-radius:50% 50% 4px 4px/34% 34% 4px 4px;box-shadow:0 40px 80px -30px rgba(0,0,0,.9)}
 .portrait .inner{position:relative;width:100%;height:100%;overflow:hidden;border-radius:50% 50% 2px 2px/33% 33% 2px 2px;background:#241915;box-shadow:inset 0 0 0 1px rgba(0,0,0,.4)}
-.portrait img{display:block;width:100%;height:100%;object-fit:cover}
+/* The cover is a 3:2 landscape in a 3:4 arch, so half its width is
+   cropped away. The couple stand in the left of the frame, so hold
+   the crop there instead of letting it centre on empty curtain. */
+.portrait img{display:block;width:100%;height:100%;object-fit:cover;object-position:18% center}
 @media (prefers-reduced-motion:no-preference){.portrait img{animation:kenburns 22s ease-in-out infinite alternate}}
 @keyframes kenburns{from{transform:scale(1.02) translate(0,0)}to{transform:scale(1.14) translate(-2%,-3%)}}
 .portrait .ph{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.8rem;padding:1.5rem;color:var(--muted);text-align:center;background:radial-gradient(80% 60% at 50% 40%,#3A2A20,#1A1310)}
@@ -1215,7 +1218,7 @@ CONFIG.audio = { src: 'audio/song1.mp3', tracks: {}, volume: .5 };
      vimeo    share link or bare id
      src      a file beside this page, e.g. 'video/our-story.mp4'
      poster   still shown before play - worth setting on a phone         */
-CONFIG.video = { youtube: '', vimeo: '', src: 'video/our-story.mp4', poster: '', caption: { en: 'Ashish & Pragati', hi: 'आशीष संग प्रगति' } };
+CONFIG.video = { youtube: '', vimeo: '', src: '', poster: '', caption: { en: '', hi: '' } };
 
 /* Songs for the couple's playlist. Each opens on YouTube — no audio is
    bundled with the page. Add or reorder freely; 'l' is the little chip. */
@@ -2115,6 +2118,9 @@ function finishOpen() {
   goLive();
   if (!state.opened) { state.opened = true; state.opening = false; lsSet('opened', '1'); const n = $('#names'); if (n) n.focus({ preventScroll: true }); }
   state.updateFab();
+  /* Carry the guest down the page rather than making them scroll. A
+     wheel or a swipe pauses it, and the tour bar can stop it outright. */
+  if (!reduced && !Tour.running) setTimeout(() => { if (!Tour.running) Tour.play('scroll'); }, 1400);
 }
 function openInvite(withSound) {
   if (state.opening || state.opened) return;
@@ -3057,7 +3063,9 @@ const Tour = (() => {
       ['wheel', 'touchmove'].forEach(ev => addEventListener(ev, onUserScrollIntent, { passive: true }));
       document.addEventListener('visibilitychange', () => { if (document.hidden && playing) pause(); });
     },
-    relabel() { if (mode) { buildBar(); } if (!menu().hidden) buildMenu(); }
+    relabel() { if (mode) { buildBar(); } if (!menu().hidden) buildMenu(); },
+    play(m) { start(m || 'scroll'); },
+    get running() { return !!mode; }
   };
 })();
 
