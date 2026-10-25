@@ -2078,15 +2078,10 @@ function finishOpen() {
   goLive();
   if (!state.opened) { state.opened = true; state.opening = false; lsSet('opened', '1'); const n = $('#names'); if (n) n.focus({ preventScroll: true }); }
   state.updateFab();
-  /* Play the invitation rather than scroll it: cinema mode holds each
-     part like a shot and cuts between them, about a minute end to end,
-     where the steady crawl took three. The tour bar stops it. */
-  if (!reduced && !Tour.running) setTimeout(() => { if (!Tour.running) Tour.play('cinema'); }, 1400);
 }
 function openInvite(withSound) {
   if (state.opening || state.opened) return;
   state.opening = true;
-  state.quietOpen = !withSound;   /* respected by cinema mode below */
   if (withSound) Music.start();
   updateMusicBtn();
   const op = $('#opener');
@@ -2977,7 +2972,7 @@ const Tour = (() => {
     buildBar();
     if (m === 'cinema') {
       document.documentElement.classList.add('tour-cinema');
-      if (Music.supported && !Music.playing && !state.quietOpen) { Music.start(); updateMusicBtn(); }
+      if (Music.supported && !Music.playing) { Music.start(); updateMusicBtn(); }
       go(idx);
     } else if (m === 'scroll') {
       lastTs = 0; cancelAnimationFrame(raf); raf = requestAnimationFrame(scrollStep);
@@ -3007,9 +3002,7 @@ const Tour = (() => {
       ['wheel', 'touchmove'].forEach(ev => addEventListener(ev, onUserScrollIntent, { passive: true }));
       document.addEventListener('visibilitychange', () => { if (document.hidden && playing) pause(); });
     },
-    relabel() { if (mode) { buildBar(); } if (!menu().hidden) buildMenu(); },
-    play(m) { start(m || 'scroll'); },
-    get running() { return !!mode; }
+    relabel() { if (mode) { buildBar(); } if (!menu().hidden) buildMenu(); }
   };
 })();
 
