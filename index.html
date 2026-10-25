@@ -2091,6 +2091,9 @@ function renderOpener() {
   const [onm1, onm2] = orderNames();
   n.append(L(onm1), h('span', { class: 'amp', 'aria-hidden': 'true' }, ` ${t('amp')} `), h('span', { class: 'sr-only' }, ` ${t('andWord')} `), L(onm2));
   fill($('#cvTo'), guestName);
+  /* Without a ?to= name there is nothing to write on the rule, and an
+     empty blank just reads as unfinished, so the whole line goes. */
+  const cvTo = $('.cv-to'); if (cvTo) cvTo.hidden = !guestName;
   const from = $('#cvFrom'); from.textContent = '';
   from.append(L(CONFIG.from.line1), h('br'), L(CONFIG.from.line2));
   buildSidePick();
