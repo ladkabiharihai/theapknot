@@ -913,21 +913,6 @@ html[lang="hi"] .track-tag{letter-spacing:.02em}
     </div>
   </section>
 
-  <section class="ch ch-noir" id="playlist" aria-labelledby="playlistH">
-    <div class="edge"></div>
-    <div class="wrap">
-      <header class="ch-head reveal">
-        <p class="numeral"></p>
-        <h2 class="ch-title foil-gold" id="playlistH" data-i18n="playlistH"></h2>
-        <p class="ch-sub" data-i18n="playlistSub"></p>
-        <span class="rule"><i></i></span>
-      </header>
-      <div class="peacock reveal" data-orn="peacock"></div>
-      <ol class="tracks stagger reveal-s" id="tracks"></ol>
-      <p class="tracks-note muted reveal" data-i18n="playlistNote"></p>
-    </div>
-  </section>
-
   <section class="ch ch-ivory" id="quiz" aria-labelledby="quizH">
     <div class="edge"></div>
     <div class="wrap">
@@ -1219,34 +1204,6 @@ CONFIG.audio = { src: 'audio/song1.mp3', tracks: {}, volume: .5 };
      src      a file beside this page, e.g. 'video/our-story.mp4'
      poster   still shown before play - worth setting on a phone         */
 CONFIG.video = { youtube: '', vimeo: '', src: '', poster: '', caption: { en: '', hi: '' } };
-
-/* Songs for the couple's playlist. Each opens on YouTube — no audio is
-   bundled with the page. Add or reorder freely; 'l' is the little chip. */
-/* Songs for the couple's playlist - slow ones, chosen to sit easy on
-   the ear. Each opens a YouTube search; no audio is bundled here.
-   Add or reorder freely; 'l' just sets the little language chip. */
-CONFIG.playlist = [
-  { t: { en: 'Tum Se Hi', hi: 'तुम से ही' }, a: { en: 'Mohit Chauhan · Jab We Met', hi: 'मोहित चौहान · जब वी मेट' }, l: 'hi' },
-  { t: { en: 'Pehla Nasha', hi: 'पहला नशा' }, a: { en: 'Udit Narayan · Sadhana Sargam', hi: 'उदित नारायण · साधना सरगम' }, l: 'hi' },
-  { t: { en: 'Agar Tum Saath Ho', hi: 'अगर तुम साथ हो' }, a: { en: 'Arijit Singh · Alka Yagnik', hi: 'अरिजीत सिंह · अल्का याज्ञिक' }, l: 'hi' },
-  { t: { en: 'Raabta', hi: 'राब्ता' }, a: { en: 'Arijit Singh', hi: 'अरिजीत सिंह' }, l: 'hi' },
-  { t: { en: 'Kabira', hi: 'कबिरा' }, a: { en: 'Tochi Raina · Rekha Bhardwaj', hi: 'तोची रैना · रेखा भारद्वाज' }, l: 'hi' },
-  { t: { en: 'Tere Bina', hi: 'तेरे बिना' }, a: { en: 'A. R. Rahman · Chinmayi', hi: 'ए. आर. रहमान · चिन्मयी' }, l: 'hi' },
-  { t: { en: 'Tujh Mein Rab Dikhta Hai', hi: 'तुझ में रब दिखता है' }, a: { en: 'Roop Kumar Rathod', hi: 'रूप कुमार राठौड़' }, l: 'hi' },
-  { t: { en: 'Bol Na Halke Halke', hi: 'बोल ना हल्के हल्के' }, a: { en: 'Rahat Fateh Ali Khan', hi: 'राहत फ़तेह अली ख़ान' }, l: 'hi' },
-  { t: { en: 'Din Shagna Da', hi: 'दिन शगना दा' }, a: { en: 'Jasleen Royal', hi: 'जसलीन रॉयल' }, l: 'hi' },
-  { t: { en: 'Saibo', hi: 'साइबो' }, a: { en: 'Shreya Ghoshal · Tochi Raina', hi: 'श्रेया घोषाल · तोची रैना' }, l: 'hi' },
-  { t: { en: 'Kesariya', hi: 'केसरिया' }, a: { en: 'Arijit Singh', hi: 'अरिजीत सिंह' }, l: 'hi' },
-  { t: { en: 'Apna Bana Le', hi: 'अपना बना ले' }, a: { en: 'Arijit Singh', hi: 'अरिजीत सिंह' }, l: 'hi' },
-  { t: { en: 'Chaudhary', hi: 'चौधरी' }, a: { en: 'Amit Trivedi · Mame Khan', hi: 'अमित त्रिवेदी · मामे ख़ान' }, l: 'hi' },
-  { t: { en: 'Perfect', hi: 'Perfect' }, a: { en: 'Ed Sheeran', hi: 'एड शीरन' }, l: 'en' },
-  { t: { en: 'Can\'t Help Falling in Love', hi: 'Can\'t Help Falling in Love' }, a: { en: 'Elvis Presley', hi: 'एल्विस प्रेस्ली' }, l: 'en' },
-  { t: { en: 'A Thousand Years', hi: 'A Thousand Years' }, a: { en: 'Christina Perri', hi: 'क्रिस्टीना पेरी' }, l: 'en' },
-  { t: { en: 'Make You Feel My Love', hi: 'Make You Feel My Love' }, a: { en: 'Adele', hi: 'अडेल' }, l: 'en' },
-  { t: { en: 'Come Away With Me', hi: 'Come Away With Me' }, a: { en: 'Norah Jones', hi: 'नोरा जोन्स' }, l: 'en' },
-  { t: { en: 'Your Song', hi: 'Your Song' }, a: { en: 'Elton John', hi: 'एल्टन जॉन' }, l: 'en' },
-  { t: { en: 'At Last', hi: 'At Last' }, a: { en: 'Etta James', hi: 'एटा जेम्स' }, l: 'en' }
-];
 
 /* =====================================================================
    TWO SIDES: the same wedding, told from each family's doorstep.
@@ -2121,13 +2078,15 @@ function finishOpen() {
   goLive();
   if (!state.opened) { state.opened = true; state.opening = false; lsSet('opened', '1'); const n = $('#names'); if (n) n.focus({ preventScroll: true }); }
   state.updateFab();
-  /* Carry the guest down the page rather than making them scroll. A
-     wheel or a swipe pauses it, and the tour bar can stop it outright. */
-  if (!reduced && !Tour.running) setTimeout(() => { if (!Tour.running) Tour.play('scroll'); }, 1400);
+  /* Play the invitation rather than scroll it: cinema mode holds each
+     part like a shot and cuts between them, about a minute end to end,
+     where the steady crawl took three. The tour bar stops it. */
+  if (!reduced && !Tour.running) setTimeout(() => { if (!Tour.running) Tour.play('cinema'); }, 1400);
 }
 function openInvite(withSound) {
   if (state.opening || state.opened) return;
   state.opening = true;
+  state.quietOpen = !withSound;   /* respected by cinema mode below */
   if (withSound) Music.start();
   updateMusicBtn();
   const op = $('#opener');
@@ -2594,24 +2553,6 @@ function renderFilm() {
   box.appendChild(face);
 }
 
-/* ---------- playlist ---------- */
-const DISC = '<svg class="disc" viewBox="0 0 40 40" aria-hidden="true" focusable="false"><circle cx="20" cy="20" r="19" fill="#170f0c" stroke="var(--gold-2)" stroke-width="1"/><g class="spin"><circle cx="20" cy="20" r="15" fill="none" stroke="rgba(216,186,120,.22)"/><circle cx="20" cy="20" r="11.5" fill="none" stroke="rgba(216,186,120,.18)"/><circle cx="20" cy="20" r="8" fill="none" stroke="rgba(216,186,120,.22)"/><circle cx="20" cy="6.4" r="1.2" fill="var(--gold-3)"/></g><circle cx="20" cy="20" r="4.4" fill="var(--gold-2)"/><circle cx="20" cy="20" r="1.3" fill="#170f0c"/></svg>';
-const GO = '<svg class="go" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" d="M8 5l7 7-7 7"/></svg>';
-function renderPlaylist() {
-  const ol = $('#tracks'); if (!ol) return; ol.textContent = '';
-  CONFIG.playlist.forEach(s => {
-    const url = `https://www.youtube.com/results?search_query=${encodeURIComponent(`${L(s.t, 'en')} ${L(s.a, 'en')} song`)}`;
-    const a = h('a', { class: 'track', href: url, target: '_blank', rel: 'noopener', 'aria-label': `${t('listen')}: ${L(s.t)} — ${L(s.a)}` });
-    const disc = h('span', { 'aria-hidden': 'true' }); disc.innerHTML = DISC;
-    const go = h('span', { 'aria-hidden': 'true' }); go.innerHTML = GO;
-    a.append(disc,
-      h('div', { class: 'track-info' }, h('p', { class: 'track-t', text: L(s.t) }), h('p', { class: 'track-a', text: L(s.a) })),
-      h('span', { class: 'track-tag', text: s.l === 'hi' ? (state.lang === 'hi' ? 'हिं' : 'Hindi') : 'Eng' }),
-      go);
-    ol.append(h('li', null, a));
-  });
-}
-
 /* ---------- rsvp ---------- */
 const TRAVEL = [['train', 'trTrain'], ['flight', 'trFlight'], ['road', 'trRoad'], ['local', 'trLocal']];
 const MAX_GUESTS = 10;
@@ -2828,7 +2769,7 @@ function renderAll() {
   applyI18n();
   applySideDom();
   renderOpener(); renderHero(); renderStatus(true); renderFamilies(); Gallery.render(); renderRituals(); renderJourney(true);
-  renderQuiz(); renderGuide(); renderFilm(); renderPlaylist(); renderRsvp(); renderPeople(); renderFooter(); renderHost();
+  renderQuiz(); renderGuide(); renderFilm(); renderRsvp(); renderPeople(); renderFooter(); renderHost();
   renumber();
 }
 function setLang(lang, persist) {
@@ -3036,7 +2977,7 @@ const Tour = (() => {
     buildBar();
     if (m === 'cinema') {
       document.documentElement.classList.add('tour-cinema');
-      if (Music.supported && !Music.playing) { Music.start(); updateMusicBtn(); }
+      if (Music.supported && !Music.playing && !state.quietOpen) { Music.start(); updateMusicBtn(); }
       go(idx);
     } else if (m === 'scroll') {
       lastTs = 0; cancelAnimationFrame(raf); raf = requestAnimationFrame(scrollStep);
@@ -3084,7 +3025,7 @@ function init() {
   syncRsvp();
   initReveal(); initFab(); initScroll(); Petals.init(); Dust.init(); Tour.init();
   if (!reduced && 'IntersectionObserver' in window) {
-    ['#gallery', '#playlist'].forEach(sel => { const el = $(sel); if (el) { const io = new IntersectionObserver(es => { if (es[0].isIntersecting) { Petals.burst(24, 2000); io.disconnect(); } }, { threshold: .28 }); io.observe(el); } });
+    ['#gallery'].forEach(sel => { const el = $(sel); if (el) { const io = new IntersectionObserver(es => { if (es[0].isIntersecting) { Petals.burst(24, 2000); io.disconnect(); } }, { threshold: .28 }); io.observe(el); } });
   }
   if (state.hostOn) Gallery.enableHost();
 
