@@ -1328,9 +1328,16 @@ function applySideDom() {
   const j = $('#journey'); if (j) j.hidden = !CONFIG.hasJourney;
   const m = $('#madhavi'); if (m) m.hidden = !CONFIG.showMadhavi;
 }
-function initialSide() {
+/* A link that names a side is addressed to that family alone, so the
+   chooser comes down with it and the other side stays out of view. A
+   bare link still asks, as before. */
+function sideFromUrl() {
   const p = (params.get('side') || hashParams.get('side') || '').toLowerCase();
-  if (p === 'groom' || p === 'bride') return p;
+  return (p === 'groom' || p === 'bride') ? p : '';
+}
+function initialSide() {
+  const p = sideFromUrl();
+  if (p) return p;
   const saved = lsGet('side');
   return saved === 'bride' ? 'bride' : 'groom';
 }
@@ -2088,6 +2095,9 @@ function renderOpener() {
 function buildSidePick() {
   const box = $('#sidePick'); if (!box) return;
   box.textContent = '';
+  const choose = $('#openerChoose');
+  if (sideFromUrl()) { if (choose) choose.hidden = true; return; }
+  if (choose) choose.hidden = false;
   ['groom', 'bride'].forEach(side => {
     const b = h('button', { type: 'button', 'data-side': side, 'aria-pressed': String(state.side === side), onclick: () => applySide(side) });
     b.innerHTML = SIDE_ART[side];
