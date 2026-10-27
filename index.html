@@ -913,24 +913,6 @@ html[lang="hi"] .track-tag{letter-spacing:.02em}
     </div>
   </section>
 
-  <section class="ch ch-ivory" id="quiz" aria-labelledby="quizH">
-    <div class="edge"></div>
-    <div class="wrap">
-      <header class="ch-head reveal">
-        <p class="numeral">VI</p>
-        <h2 class="ch-title" id="quizH" data-i18n="quizH"></h2>
-        <p class="ch-sub" id="quizIntro"></p>
-        <span class="rule"><i></i></span>
-      </header>
-      <div class="card reveal" style="text-align:left">
-        <span class="corner c-tl" data-orn="corner"></span><span class="corner c-tr" data-orn="corner"></span><span class="corner c-bl" data-orn="corner"></span><span class="corner c-br" data-orn="corner"></span>
-        <div class="board" id="quizBoard"></div>
-      </div>
-      <p class="sr-only" id="quizLive" aria-live="polite"></p>
-      <p class="best" id="quizBest" hidden></p>
-    </div>
-  </section>
-
   <section class="ch ch-sage" id="guide" aria-labelledby="guideH">
     <div class="edge"></div>
     <div class="wrap wide">
@@ -1143,17 +1125,6 @@ const CONFIG = {
     { key: 'baraat', label: { en: '24 Nov: Travel with the baraat', hi: '24 नवंबर: बारात के साथ यात्रा' } },
     { key: 'vivah', label: { en: '25 Nov: Wedding, Lucknow', hi: '25 नवंबर: शुभ विवाह, लखनऊ' } }
   ],
-  quiz: [
-    { q: { en: 'Which city is Pragati from?', hi: 'प्रगति किस शहर से हैं?' }, options: [{ en: 'Lucknow', hi: 'लखनऊ' }, { en: 'Kanpur', hi: 'कानपुर' }, { en: 'Varanasi', hi: 'वाराणसी' }, { en: 'Patna', hi: 'पटना' }] },
-    { q: { en: "Where is Ashish's family home?", hi: 'आशीष का निवास स्थान कहाँ है?' }, options: [{ en: 'Zero Mile, Muzaffarpur', hi: 'जीरोमाईल, मुज़फ़्फ़रपुर' }, { en: 'Darbhanga', hi: 'दरभंगा' }, { en: 'Gaya', hi: 'गया' }, { en: 'Bhagalpur', hi: 'भागलपुर' }] },
-    { q: { en: 'What does Ashish do?', hi: 'आशीष क्या करते हैं?' }, options: [{ en: 'AI Engineer', hi: 'AI इंजीनियर' }, { en: 'Doctor', hi: 'डॉक्टर' }, { en: 'Banker', hi: 'बैंकर' }, { en: 'Lawyer', hi: 'वकील' }] },
-    { q: { en: 'What field does Pragati work in?', hi: 'प्रगति किस क्षेत्र में काम करती हैं?' }, options: [{ en: 'Talent acquisition', hi: 'टैलेंट एक्विज़िशन' }, { en: 'Marketing', hi: 'मार्केटिंग' }, { en: 'Accounts', hi: 'अकाउंट्स' }, { en: 'Journalism', hi: 'पत्रकारिता' }] },
-    { q: { en: 'When does the baraat set out?', hi: 'बारात कब प्रस्थान करेगी?' }, options: [{ en: '24 Nov, 10 PM', hi: '24 नवंबर, रात्रि 10 बजे' }, { en: '25 Nov, morning', hi: '25 नवंबर, सुबह' }, { en: '23 Nov, evening', hi: '23 नवंबर, शाम' }, { en: '21 Nov, night', hi: '21 नवंबर, रात' }] },
-    { q: { en: "Ashish's father served in…", hi: 'आशीष के पिताजी ने किस सेवा में योगदान दिया?' }, options: [{ en: 'The Indian Army', hi: 'भारतीय सेना' }, { en: 'Railways', hi: 'रेलवे' }, { en: 'Postal service', hi: 'डाक विभाग' }, { en: 'Police', hi: 'पुलिस' }] },
-    { q: { en: "What is Pragati's mother's profession?", hi: 'प्रगति की माताजी का पेशा क्या है?' }, options: [{ en: 'Teacher', hi: 'शिक्षिका' }, { en: 'Doctor', hi: 'डॉक्टर' }, { en: 'Banker', hi: 'बैंकर' }, { en: 'Nurse', hi: 'नर्स' }] },
-    { q: { en: 'Muzaffarpur is famous for which fruit?', hi: 'मुज़फ़्फ़रपुर किस फल के लिए प्रसिद्ध है?' }, options: [{ en: 'Litchi', hi: 'लीची' }, { en: 'Apple', hi: 'सेब' }, { en: 'Orange', hi: 'संतरा' }, { en: 'Grapes', hi: 'अंगूर' }] },
-    { q: { en: 'Lucknow is famous for which embroidery?', hi: 'लखनऊ किस कढ़ाई के लिए मशहूर है?' }, options: [{ en: 'Chikankari', hi: 'चिकनकारी' }, { en: 'Phulkari', hi: 'फुलकारी' }, { en: 'Kantha', hi: 'कांथा' }, { en: 'Bandhani', hi: 'बांधनी' }] }
-  ],
   guide: [
     { h: { en: 'Reaching Lucknow (25 Nov)', hi: 'लखनऊ कैसे पहुँचें (25 नवंबर)' }, p: { en: 'Nearest station: Lucknow Charbagh. Airport: Chaudhary Charan Singh International (Amausi).', hi: 'नज़दीकी स्टेशन: लखनऊ चारबाग। हवाई अड्डा: चौधरी चरण सिंह अंतरराष्ट्रीय (अमौसी)।' } },
     { h: { en: 'Reaching Muzaffarpur (21 Nov)', hi: 'मुज़फ़्फ़रपुर कैसे पहुँचें (21 नवंबर)' }, p: { en: 'Nearest station: Muzaffarpur Junction. Nearest airports: Patna and Darbhanga.', hi: 'नज़दीकी स्टेशन: मुज़फ़्फ़रपुर जंक्शन। नज़दीकी हवाई अड्डे: पटना और दरभंगा।' } },
@@ -1309,7 +1280,7 @@ function renumber() {
 
 const T = {
   hi: {
-    docTitle: 'शुभ विवाह: आशीष संग प्रगति', langGroup: 'भाषा', andWord: 'संग', sang: 'संग', amp: 'संग',
+    docTitle: 'शुभ विवाह: {couple}', langGroup: 'भाषा', andWord: 'संग', sang: 'संग', amp: 'संग',
     kicker: 'सस्नेह निमंत्रण', cvTop: 'सस्नेह निमंत्रण', shubhVivah: 'शुभ विवाह', cvShri: 'श्री',
     openHint: 'मुहर तोड़कर निमंत्रण खोलें', openLabel: 'मुहर तोड़ें और शहनाई के साथ निमंत्रण खोलें', openQuiet: 'बिना संगीत के खोलें',
     cvDate: 'दिनांक {d} ({w})', cvFrom1: 'प्रेषक: सूबेदार मेजर शिव नारायण भंडारी (से.नि.)', cvFrom2: 'भारतीय सेना, जिरोमाईल, मुज़फ़्फ़रपुर',
@@ -1326,7 +1297,7 @@ const T = {
     grace: 'परमपिता परमेश्वर की असीम अनुकम्पा से',
     parinayKe: 'के', parinay: '॥ परिणयोत्सव ॥',
     parinayText: 'पर आपकी स्नेहिल उपस्थिति एवं आशीर्वचनों से वर-वधू को अभिसिंचित कर हमें अनुगृहित करें।',
-    galleryH: 'हमारी यादें', gallerySub: 'कुछ पल, जो हमें यहाँ तक लाए', portraitCap: 'आशीष संग प्रगति',
+    galleryH: 'हमारी यादें', gallerySub: 'कुछ पल, जो हमें यहाँ तक लाए', portraitCap: '{couple}',
     phPortrait: 'यहाँ आपकी जोड़ी की तस्वीर आएगी', phFrame: 'तस्वीर जोड़ें', prev: 'पिछली', next: 'अगली', close: 'बंद करें',
     upH: 'तस्वीरें जोड़ें', upNote: 'तस्वीरें पहले सिर्फ़ इसी डिवाइस पर रहेंगी। “तस्वीरों सहित पेज सहेजें” दबाकर नई फ़ाइल बनाएँ और वही अपनी वेबसाइट पर अपलोड करें।',
     upChoose: 'तस्वीरें चुनें', upDrop: 'या यहाँ खींचकर छोड़ें', upSave: 'तस्वीरों सहित पेज सहेजें',
@@ -1365,13 +1336,13 @@ const T = {
     doneWaH: 'बस एक कदम, {name} जी', doneWaP: 'WhatsApp में आपका संदेश तैयार है। वहाँ Send दबाकर भेज दीजिए।',
     doneWaAgain: 'WhatsApp फिर खोलें', doneDirectH: 'धन्यवाद, {name} जी', doneDirectP: 'आपकी सूचना परिवार तक पहुँच गई।',
     doneNoP: 'आपकी कमी खलेगी। आपका आशीर्वाद वर-वधू तक ज़रूर पहुँचेगा।', editRsvp: 'जवाब बदलें',
-    msgTitle: 'आशीष संग प्रगति के विवाह हेतु सूचना', msgName: 'नाम', msgComing: 'आगमन', msgYes: 'हाँ, {count} {people}', msgNo: 'नहीं आ पाएँगे, शुभकामनाएँ',
+    msgTitle: '{couple} के विवाह हेतु सूचना', msgName: 'नाम', msgComing: 'आगमन', msgYes: 'हाँ, {count} {people}', msgNo: 'नहीं आ पाएँगे, शुभकामनाएँ',
     msgPerson: 'व्यक्ति', msgPeople: 'लोग', msgJoin: 'कार्यक्रम', msgTravel: 'लखनऊ यात्रा', msgArriving: 'आगमन {date}', msgPickup: 'लेने की व्यवस्था चाहिए',
     msgPhone: 'फ़ोन', msgNote: 'संदेश',
     peopleH: 'स्वागतकर्ता', darshanH: 'दर्शनाभिलाषी', akankshiH: 'आकांक्षी', senderH: 'प्रेषक',
     call: 'कॉल करें', whatsapp: 'WhatsApp',
     accept: 'कृपया हमारे परिवार की ओर से सादर आमंत्रण स्वीकार करें।',
-    footIcs: 'सभी कार्यक्रम सहेजें (.ics)', share: 'निमंत्रण भेजें', shareMsg: '25 नवंबर 2026 को आशीष संग प्रगति के शुभ विवाह में आप सादर आमंत्रित हैं।',
+    footIcs: 'सभी कार्यक्रम सहेजें (.ics)', share: 'निमंत्रण भेजें', shareMsg: '25 नवंबर 2026 को {couple} के शुभ विवाह में आप सादर आमंत्रित हैं।',
     made: 'भंडारी परिवार, जीरोमाईल, मुज़फ़्फ़रपुर', fab: 'RSVP',
     hostH: 'मेज़बान के लिए', hostOwner: 'यह हिस्सा सिर्फ़ आपको दिखता है।', hostParam: 'यह हिस्सा लिंक में ?host होने से दिख रहा है। भेजने से पहले हटा दें।',
     hostMissingH: 'बाकी जानकारी', hostMissingNote: '{n} जानकारी अभी बाकी है।', hostAllSet: 'सारी जानकारी भरी हुई है।',
@@ -1381,7 +1352,7 @@ const T = {
     hostBase: 'निमंत्रण का लिंक', hostName: 'परिवार या मेहमान का नाम', hostNamePh: 'सिन्हा जी सपरिवार', hostLang: 'निमंत्रण की भाषा',
     hostNeedBase: 'निजी लिंक बनाने के लिए ऊपर निमंत्रण का लिंक डालें।', hostCopy: 'लिंक कॉपी करें', hostWa: 'WhatsApp पर भेजें', hostCopied: 'लिंक कॉपी हो गया',
     hostGreetNamed: 'आदरणीय {name},', hostGreetAnon: 'आदरणीय स्वजन,',
-    hostMsg: '{greet}\n25 नवंबर 2026 को आशीष संग प्रगति के शुभ विवाह में आप सादर आमंत्रित हैं। आपका निमंत्रण: {link}',
+    hostMsg: '{greet}\n25 नवंबर 2026 को {couple} के शुभ विवाह में आप सादर आमंत्रित हैं। आपका निमंत्रण: {link}',
     hostPreviewH: 'विवाह के दिनों का दृश्य', hostPreviewNote: 'कार्यक्रमों के दौरान उलटी गिनती लाइव जानकारी में बदल जाती है। यहाँ परखें; मेहमानों पर असर नहीं पड़ेगा।',
     pvLive: 'आज', pvHaldi: 'हल्दी के समय', pvBaraat: 'बारात प्रस्थान', pvVivah: 'विवाह का दिन', pvAfter: 'विवाह के बाद',
     chooseSide: 'आप किस ओर से हैं?',
@@ -1397,7 +1368,7 @@ const T = {
     filmH: 'हमारी फ़िल्म', filmSub: 'चलती-फिरती एक झलक', filmPlay: 'फ़िल्म चलाएँ'
   },
   en: {
-    docTitle: 'Shubh Vivah: Ashish & Pragati', langGroup: 'Language', andWord: 'and', sang: '&', amp: 'weds',
+    docTitle: 'Shubh Vivah: {couple}', langGroup: 'Language', andWord: 'and', sang: '&', amp: 'weds',
     kicker: 'You are cordially invited', cvTop: 'With love, an invitation', shubhVivah: 'Shubh Vivah', cvShri: 'For',
     openHint: 'Break the seal to open your invitation', openLabel: 'Break the seal and open the invitation with shehnai music', openQuiet: 'Open without music',
     cvDate: '{d} ({w})', cvFrom1: 'From: Subedar Major Shiv Narayan Bhandari (Retd.)', cvFrom2: 'Indian Army, Zero Mile, Muzaffarpur',
@@ -1416,7 +1387,7 @@ const T = {
     grace: 'By the boundless grace of the Almighty, we request the honour of your presence at the wedding of',
     parinayKe: 'at the', parinay: 'Wedding Celebration',
     parinayText: 'Bless the couple with your loving presence and kind words, and honour us.',
-    galleryH: 'Our Story in Frames', gallerySub: 'moments that brought us here', portraitCap: 'Ashish & Pragati',
+    galleryH: 'Our Story in Frames', gallerySub: 'moments that brought us here', portraitCap: '{couple}',
     phPortrait: 'Your portrait together will appear here', phFrame: 'Add a photograph', prev: 'Previous', next: 'Next', close: 'Close',
     upH: 'Add photographs', upNote: 'Photos stay on this device until you press “Save page with photos”. That creates a new file; upload that file to your website.',
     upChoose: 'Choose photos', upDrop: 'or drag and drop them here', upSave: 'Save page with photos',
@@ -1440,7 +1411,7 @@ const T = {
     verdict4: 'You know them better than the pandit does!', verdict3: 'Well played. A front-row seat at the jaimala is yours.',
     verdict2: 'Not bad. Catch up with the couple before the big day.', verdict1: 'Time to call the family and catch up!',
     shareScore: 'Send score on WhatsApp', playAgain: 'Play again', best: 'Your best so far: {best} of {n}',
-    scoreMsg: 'I scored {score}/{n} for Team {side} in the Ashish & Pragati wedding quiz. Your turn!',
+    scoreMsg: 'I scored {score}/{n} for Team {side} in the {couple} wedding quiz. Your turn!',
     guideH: 'For Our Guests', whenHome: '21 Nov: Puja, Matkor, Haldi-Mehndi', whenVenue: '25 Nov: Shubh Vivah',
     copyAddr: 'Copy address', copied: 'Address copied', copyFail: 'Copying did not work. Press and hold the text to copy it.',
     rsvpH: 'Will You Join Us?', rsvpSub: 'kindly reply', rsvpIntro: 'Knowing who is coming helps us plan rooms, baraat seats and the feast.',
@@ -1456,13 +1427,13 @@ const T = {
     doneWaH: 'Almost done, {name}', doneWaP: 'WhatsApp has your reply ready. Tap send there to deliver it.',
     doneWaAgain: 'Open WhatsApp again', doneDirectH: 'Thank you, {name}', doneDirectP: 'Your reply reached the family.',
     doneNoP: 'We will miss you. Your blessings will surely reach the couple.', editRsvp: 'Change my reply',
-    msgTitle: 'RSVP for the wedding of Ashish & Pragati', msgName: 'Name', msgComing: 'Coming', msgYes: 'Yes, {count} {people}', msgNo: 'No, sending blessings',
+    msgTitle: 'RSVP for the wedding of {couple}', msgName: 'Name', msgComing: 'Coming', msgYes: 'Yes, {count} {people}', msgNo: 'No, sending blessings',
     msgPerson: 'person', msgPeople: 'people', msgJoin: 'Events', msgTravel: 'To Lucknow', msgArriving: 'arriving {date}', msgPickup: 'needs a pickup',
     msgPhone: 'Phone', msgNote: 'Note',
     peopleH: 'With Warm Regards', darshanH: 'Eager to welcome you', akankshiH: 'With the blessings of', senderH: 'Sent by',
     call: 'Call', whatsapp: 'WhatsApp',
     accept: 'Please accept this invitation on behalf of our family.',
-    footIcs: 'Save all events (.ics)', share: 'Share invitation', shareMsg: 'You are warmly invited to the wedding of Ashish & Pragati on 25 November 2026.',
+    footIcs: 'Save all events (.ics)', share: 'Share invitation', shareMsg: 'You are warmly invited to the wedding of {couple} on 25 November 2026.',
     made: 'The Bhandari Family · Zero Mile · Muzaffarpur', fab: 'RSVP',
     hostH: 'Host tools', hostOwner: 'Only you can see this panel.', hostParam: 'This panel shows because the link has ?host in it. Remove it before sharing.',
     hostMissingH: 'Still to confirm', hostMissingNote: '{n} details still to confirm.', hostAllSet: 'Everything is filled in.',
@@ -1472,7 +1443,7 @@ const T = {
     hostBase: 'Invitation link', hostName: 'Family or guest name', hostNamePh: 'Sinha family', hostLang: 'Language of the invitation',
     hostNeedBase: 'Paste the invitation link above to build personal links.', hostCopy: 'Copy link', hostWa: 'Send on WhatsApp', hostCopied: 'Link copied',
     hostGreetNamed: 'Dear {name},', hostGreetAnon: 'Dear family,',
-    hostMsg: '{greet}\nYou are warmly invited to the wedding of Ashish & Pragati on 25 November 2026. Your invitation: {link}',
+    hostMsg: '{greet}\nYou are warmly invited to the wedding of {couple} on 25 November 2026. Your invitation: {link}',
     hostPreviewH: 'Preview the wedding days', hostPreviewNote: 'During the ceremonies the countdown turns into live updates. Try it here; guests are not affected.',
     pvLive: 'Today', pvHaldi: 'During Haldi', pvBaraat: 'Baraat departure', pvVivah: 'Wedding day', pvAfter: 'After the wedding',
     chooseSide: "Whose side are you on?",
@@ -1514,6 +1485,7 @@ function lsGet(k) { try { return localStorage.getItem(LS + k); } catch (e) { ret
 function lsSet(k, v) { try { localStorage.setItem(LS + k, v); } catch (e) { /* unavailable */ } }
 function t(key, vars, lang = state.lang) {
   let s = (T[lang] && T[lang][key] != null) ? T[lang][key] : (T.en[key] != null ? T.en[key] : key);
+  if (typeof s === 'string' && s.indexOf('{couple}') >= 0 && typeof coupleNames === 'function') s = s.split('{couple}').join(coupleNames(lang));
   if (vars) s = s.replace(/\{(\w+)\}/g, (m, k) => (vars[k] != null ? String(vars[k]) : m));
   return s;
 }
@@ -1577,6 +1549,10 @@ const whenText = ev => {
   return tl ? `${d}, ${tl}` : d;
 };
 const orderNames = () => (state.side === 'bride' ? [CONFIG.bride, CONFIG.groom] : [CONFIG.groom, CONFIG.bride]);
+/* The pair in the order the side being read expects, joined as the
+   fixed strings used to join them: "A & B" in English, "क संग ख" in
+   Hindi. t() drops this into any string holding {couple}. */
+const coupleNames = (lang = state.lang) => { const [a, b] = orderNames(); return `${L(a, lang)} ${t('sang', null, lang)} ${L(b, lang)}`; };
 const couple = (lang = state.lang) => { const [a, b] = orderNames(); return `${L(a, lang)} ${t('amp', null, lang)} ${L(b, lang)}`; };
 
 /* ---------- links and files ---------- */
@@ -2409,67 +2385,8 @@ function journeyScroll() {
   jPlace(clamp((vh * .85 - r.top) / (vh * .7), 0, 1) * .96);
 }
 
-/* ---------- quiz ---------- */
-const Q = { side: null, i: 0, score: 0, picked: null, done: false, order: [] };
-const shuffle = arr => { const a = arr.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+/* The opener's side buttons still need these names. */
 const sideName = s => t(s === 'groom' ? 'sideGroom' : 'sideBride');
-const focusLater = sel => requestAnimationFrame(() => { const el = $(sel); if (el) el.focus(); });
-function startQuiz(side) { Object.assign(Q, { side, i: 0, score: 0, picked: null, done: false, order: CONFIG.quiz.map(q => shuffle(q.options.map((_, k) => k))) }); renderQuiz(); focusLater('#qText'); }
-function answer(k) {
-  if (Q.picked !== null) return;
-  Q.picked = k; if (k === 0) Q.score++;
-  $('#quizLive').textContent = plain(k === 0 ? t('right') : t('wrong', { answer: L(CONFIG.quiz[Q.i].options[0]) }));
-  renderQuiz(); focusLater('#qNext');
-}
-function nextQ() {
-  Q.picked = null; Q.i++;
-  if (Q.i >= CONFIG.quiz.length) {
-    Q.done = true;
-    lsSet('quizBest', String(Math.max(+(lsGet('quizBest') || 0), Q.score)));
-    renderQuiz(); focusLater('#qScore');
-    if (Q.score / CONFIG.quiz.length >= .7) Petals.burst(50, 3000);
-  } else { renderQuiz(); focusLater('#qText'); }
-}
-function renderQuiz() {
-  const n = CONFIG.quiz.length;
-  fill($('#quizIntro'), t('quizIntro', { n: numLocal(n) }));
-  const b = $('#quizBoard'); b.textContent = '';
-  if (!Q.side) {
-    const btn = side => { const el = h('button', { type: 'button', class: 'side-btn', onclick: () => startQuiz(side) }); el.innerHTML = SIDE_ART[side]; el.append(h('strong', { text: sideName(side) }), h('span', { text: t(side === 'groom' ? 'sideGroomSub' : 'sideBrideSub') })); return el; };
-    b.append(h('div', { class: 'sides' }, btn('groom'), btn('bride')));
-  } else if (!Q.done) {
-    const q = CONFIG.quiz[Q.i], answered = Q.picked !== null;
-    b.append(h('div', { class: 'q-meta' }, h('span', { text: t('quizProgress', { i: numLocal(Q.i + 1), n: numLocal(n) }) }), h('span', { text: t('quizTeam', { side: sideName(Q.side) }) })));
-    b.append(h('p', { class: 'q-text', id: 'qText', tabindex: '-1', text: L(q.q) }));
-    const opts = h('div', { class: 'opts', role: 'group', 'aria-labelledby': 'qText' });
-    Q.order[Q.i].forEach(k => {
-      const right = k === 0, picked = k === Q.picked;
-      opts.append(h('button', { type: 'button', class: 'opt' + (answered && right ? ' is-right' : '') + (answered && picked && !right ? ' is-wrong' : ''), disabled: answered, onclick: () => answer(k) },
-        h('span', { text: L(q.options[k]) }), h('span', { class: 'mk', 'aria-hidden': 'true' }, answered && right ? '✓' : answered && picked ? '✗' : '')));
-    });
-    b.append(opts);
-    const fb = h('p', { class: 'q-feedback' });
-    if (answered) fill(fb, Q.picked === 0 ? t('right') : t('wrong', { answer: L(q.options[0]) }));
-    b.append(fb);
-    if (answered) b.append(h('button', { type: 'button', class: 'btn btn-solid q-next', id: 'qNext', onclick: nextQ }, t(Q.i + 1 < n ? 'nextQ' : 'seeScore')));
-  } else {
-    const pct = Q.score / n;
-    const v = Q.score === n ? 'verdict4' : pct >= .7 ? 'verdict3' : pct >= .4 ? 'verdict2' : 'verdict1';
-    const link = publicLink();
-    const msg = t('scoreMsg', { score: Q.score, n, side: sideName(Q.side) }) + (link ? ` ${link}` : '');
-    b.append(h('div', { class: 'result' },
-      h('p', { class: 'score', id: 'qScore', tabindex: '-1', text: t('scoreLine', { side: sideName(Q.side), score: numLocal(Q.score), n: numLocal(n) }) }),
-      h('p', { class: 'verdict', text: t(v) }),
-      h('div', { class: 'actions' },
-        iconBtn('a', { class: 'btn btn-solid', href: waUrl('', msg), target: '_blank', rel: 'noopener' }, ICON.chat, t('shareScore')),
-        h('button', { type: 'button', class: 'btn', onclick: () => { Q.side = null; Q.done = false; renderQuiz(); focusLater('#quizBoard .side-btn'); } }, t('playAgain')))));
-  }
-  const best = +(lsGet('quizBest') || 0), el = $('#quizBest');
-  el.hidden = !best;
-  if (best) fill(el, t('best', { best: numLocal(best), n: numLocal(n) }));
-}
-
-
 
 /* ---------- guide ---------- */
 function renderGuide() {
@@ -2764,7 +2681,7 @@ function renderAll() {
   applyI18n();
   applySideDom();
   renderOpener(); renderHero(); renderStatus(true); renderFamilies(); Gallery.render(); renderRituals(); renderJourney(true);
-  renderQuiz(); renderGuide(); renderFilm(); renderRsvp(); renderPeople(); renderFooter(); renderHost();
+  renderGuide(); renderFilm(); renderRsvp(); renderPeople(); renderFooter(); renderHost();
   renumber();
 }
 function setLang(lang, persist) {
