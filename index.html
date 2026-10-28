@@ -1050,7 +1050,8 @@ const CONFIG = {
       role: 'Sr. Executive, Talent Acquisition',
       lines: [
         { en: 'Granddaughter of late Smt. Santosh Kumari Saxena & late Shri Hari Krishna Saxena', hi: 'सुपौत्री – स्व. संतोष कुमारी सक्सेना एवं स्व. हरि कृष्ण सक्सेना' },
-        { en: 'Daughter of Smt. Vandana Saxena (Teacher) & Shri Anup Kumar Saxena (Retd. Junior Engineer)', hi: 'सुपुत्री – श्रीमती वन्दना सक्सेना (शिक्षिका) एवं श्री अनुप कुमार सक्सेना (सेवानिवृत्त कनीय अभियंता)' },
+        { en: 'Daughter of Smt. Vandana Saxena (Teacher) & Shri Anup Kumar Saxena (Retd. Junior Engineer)', hi: 'सुपुत्री – श्रीमती वन्दना सक्सेना (शिक्षिका) एवं श्री अनुप कुमार सक्सेना (सेवानिवृत्त कनीय अभियंता)',
+          plain: { en: 'Daughter of Smt. Vandana Saxena & Shri Anup Kumar Saxena', hi: 'सुपुत्री – श्रीमती वन्दना सक्सेना एवं श्री अनुप कुमार सक्सेना' } },
         { en: '414/134 Sarai Mali Khan Chowk, Lucknow', hi: '414/134 सराय मालीखाँ चौक, लखनऊ' }
       ]
     }
@@ -2131,9 +2132,18 @@ function renderFamilies() {
   /* Move the nodes rather than restyling them, so the order a screen
      reader announces matches the order on the page. */
   if (fw && fg && fb && fj) fw.append(brideFirst ? fb : fg, fj, brideFirst ? fg : fb);
+  /* On the bride's invitation nobody carries a post: not hers, not his,
+     not her parents'. The designations stay on the groom's side, where
+     a 'plain' variant of a line is simply not used. */
+  const bare = brideFirst;
   [['groom', '#famGroom'], ['bride', '#famBride']].forEach(([k, sel]) => {
     const f = CONFIG.families[k], box = $(sel); box.textContent = '';
-    box.append(h('p', { class: 'who', text: L(f.who) }), h('p', { class: 'role', text: f.role }), h('ul', null, f.lines.map(x => h('li', { text: L(x) }))));
+    const lines = f.lines.map(x => (bare && x.plain) ? x.plain : x);
+    /* Element.append turns a null into the literal string "null", so the
+       role has to be filtered out rather than passed through. */
+    box.append(...[h('p', { class: 'who', text: L(f.who) }),
+      bare ? null : h('p', { class: 'role', text: f.role }),
+      h('ul', null, lines.map(x => h('li', { text: L(x) })))].filter(Boolean));
   });
 }
 
