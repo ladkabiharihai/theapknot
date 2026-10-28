@@ -204,13 +204,13 @@ html[lang="hi"] .cv-names{font-family:"Rozha One",serif;font-weight:400;line-hei
 .cv-to .shri{font-family:var(--display);font-size:5.4cqi;color:#7A1A2E}
 .cv-to .line{flex:1;min-height:5.5cqi;border-bottom:1px solid rgba(169,132,58,.8);font-family:var(--script);font-size:5.6cqi;line-height:1.15;text-align:center}
 .cv-from{margin-top:2.6cqi;font-size:2.9cqi;line-height:1.5;color:#5E4C42}
-.seal{position:absolute;left:50%;bottom:-8cqi;width:24cqi;aspect-ratio:1;transform:translateX(-50%);padding:0;border:0;background:none;cursor:pointer;z-index:3;filter:drop-shadow(0 6px 10px rgba(0,0,0,.45))}
+.seal{position:absolute;left:50%;bottom:-8cqi;width:24cqi;aspect-ratio:1;transform:translateX(-50%);padding:0;border:0;background:none;cursor:pointer;z-index:3;filter:drop-shadow(0 6px 10px rgba(0,0,0,.45)) drop-shadow(0 0 9px rgba(216,186,120,.5))}
 .seal svg{display:block;width:100%;height:100%;overflow:visible}
 .seal .half{transition:transform .7s cubic-bezier(.5,0,.3,1),opacity .7s}
 .opener.is-opening .seal .h1{transform:translate(-14px,10px) rotate(-18deg);opacity:0}
 .opener.is-opening .seal .h2{transform:translate(14px,10px) rotate(18deg);opacity:0}
-@media (prefers-reduced-motion:no-preference){.opener:not(.is-opening) .seal{animation:pulse 2.8s ease-in-out infinite}}
-@keyframes pulse{50%{transform:translateX(-50%) scale(1.06)}}
+@media (prefers-reduced-motion:no-preference){.opener:not(.is-opening) .seal{animation:pulse 1.4s ease-in-out infinite}}
+@keyframes pulse{50%{transform:translateX(-50%) scale(1.1)}}
 /* Was 9cqi. The hint sits outside .card3d, the only element with a
    container-type, so cqi fell back to the viewport width and booked
    171px of empty curtain on a wide screen. It only has to clear the
@@ -283,7 +283,7 @@ html[lang="hi"] .hero-venue{font-family:var(--serif);font-size:5cqi}
   .leg{transform-box:fill-box;transform-origin:50% 0;animation:step 1.3s ease-in-out infinite}
   .leg-a{animation-delay:-.65s}
   .tassel{transform-box:fill-box;transform-origin:50% 0;animation:swing 2.6s ease-in-out infinite}
-  .hero .scroll-cue span{animation:cue 2.2s ease-in-out infinite}
+  .hero .scroll-cue i span{animation:cue 2.2s ease-in-out infinite}
 }
 @media (prefers-reduced-motion:reduce){.march{left:50%;transform:translateX(-50%)}}
 @keyframes march{from{transform:translateX(100vw)}to{transform:translateX(-100%)}}
@@ -291,10 +291,17 @@ html[lang="hi"] .hero-venue{font-family:var(--serif);font-size:5cqi}
 @keyframes step{0%,100%{transform:rotate(6deg)}50%{transform:rotate(-6deg)}}
 @keyframes swing{0%,100%{transform:rotate(5deg)}50%{transform:rotate(-5deg)}}
 @keyframes cue{0%{transform:translateY(-6px);opacity:0}40%{opacity:1}100%{transform:translateY(10px);opacity:0}}
-.scroll-cue{display:flex;flex-direction:column;align-items:center;gap:.3rem;margin-top:.4rem;color:var(--muted);font-size:.9rem;letter-spacing:.2em;text-transform:uppercase}
+/* Two ways on from the first screen: read it yourself, or let it play.
+   The cue is a real button now - it used to be decoration only. */
+.hero-next{display:flex;flex-direction:column;align-items:center;gap:.5rem;margin-top:.4rem}
+.scroll-cue{display:flex;flex-direction:column;align-items:center;gap:.3rem;padding:.3rem .9rem;border:0;background:none;color:var(--muted);font-family:inherit;font-size:.9rem;letter-spacing:.2em;text-transform:uppercase;cursor:pointer}
 html[lang="hi"] .scroll-cue{letter-spacing:0;text-transform:none}
 .scroll-cue i{position:relative;display:block;width:1px;height:34px;background:rgba(216,186,120,.35);overflow:hidden}
-.scroll-cue span{position:absolute;left:-1px;top:0;width:3px;height:12px;background:var(--gold-2)}
+/* ">" matters: a bare '.scroll-cue span' also grabbed the label and
+   threw it out of the flow as a 3px gold sliver. */
+.scroll-cue i > span{position:absolute;left:-1px;top:0;width:3px;height:12px;background:var(--gold-2)}
+.cue-auto{display:inline-flex;align-items:center;gap:.45rem;min-height:42px;padding:.35rem 1.05rem;border:1px solid var(--gold-2);border-radius:999px;background:rgba(18,12,10,.55);color:var(--gold-2);font-family:inherit;font-size:.96rem;cursor:pointer}
+.cue-auto svg{width:14px;height:14px;fill:currentColor}
 
 /* crest */
 .crest-wrap svg{display:block;width:100%;height:auto;overflow:visible}
@@ -803,7 +810,10 @@ html[lang="hi"] .track-tag{letter-spacing:.02em}
       </div>
     </div>
     <div class="procession" aria-hidden="true"><div class="march" id="march"></div></div>
-    <div class="scroll-cue" aria-hidden="true"><span data-i18n="scroll"></span><i><span></span></i></div>
+    <div class="hero-next">
+      <button type="button" class="scroll-cue" id="cueScroll"><span data-i18n="scroll"></span><i aria-hidden="true"><span></span></i></button>
+      <button type="button" class="cue-auto" id="cueAuto"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 5.4v13.2L19 12z"/></svg><span data-i18n="cueAuto"></span></button>
+    </div>
   </header>
 
   <section class="ch ch-ivory status" id="status" aria-labelledby="statusH"><div class="edge"></div><div class="wrap" id="statusBox"></div></section>
@@ -1234,7 +1244,7 @@ const T = {
     kicker: 'सस्नेह निमंत्रण', cvTop: 'सस्नेह निमंत्रण', shubhVivah: 'शुभ विवाह', cvShri: 'श्री',
     openHint: 'मुहर तोड़कर निमंत्रण खोलें', openLabel: 'मुहर तोड़ें और शहनाई के साथ निमंत्रण खोलें', openQuiet: 'बिना संगीत के खोलें',
     cvDate: 'दिनांक {d} ({w})', cvFrom1: 'प्रेषक: सूबेदार मेजर शिव नारायण भंडारी (से.नि.)', cvFrom2: 'भारतीय सेना, जिरोमाईल, मुज़फ़्फ़रपुर',
-    music: 'शहनाई और ढोलक', venueShort: 'सोनवानी मैरिज लॉन, लखनऊ', scroll: 'नीचे देखें', monoA: 'आ', monoB: 'प्र', year: '२०२६',
+    music: 'शहनाई और ढोलक', venueShort: 'सोनवानी मैरिज लॉन, लखनऊ', scroll: 'नीचे देखें', cueAuto: 'अपने आप चलाएँ', monoA: 'आ', monoB: 'प्र', year: '२०२६',
     untilEvent: '{event} में',
     days: 'दिन', hours: 'घंटे', minutes: 'मिनट', seconds: 'सेकंड', day1: 'दिन', hour1: 'घंटा', minute1: 'मिनट', second1: 'सेकंड',
     firstRasm: 'पहली रस्म: {date}{time} ({event})',
@@ -1322,7 +1332,7 @@ const T = {
     kicker: 'You are cordially invited', cvTop: 'With love, an invitation', shubhVivah: 'Shubh Vivah', cvShri: 'For',
     openHint: 'Break the seal to open your invitation', openLabel: 'Break the seal and open the invitation with shehnai music', openQuiet: 'Open without music',
     cvDate: '{d} ({w})', cvFrom1: 'From: Subedar Major Shiv Narayan Bhandari (Retd.)', cvFrom2: 'Indian Army, Zero Mile, Muzaffarpur',
-    music: 'Shehnai and dholak', venueShort: 'Sonwani Marriage Lawn, Lucknow', scroll: 'Scroll', monoA: 'A', monoB: 'P', year: 'MMXXVI',
+    music: 'Shehnai and dholak', venueShort: 'Sonwani Marriage Lawn, Lucknow', scroll: 'Scroll down', cueAuto: 'Play on its own', monoA: 'A', monoB: 'P', year: 'MMXXVI',
     untilEvent: 'Until the {event}',
     days: 'Days', hours: 'Hours', minutes: 'Minutes', seconds: 'Seconds', day1: 'Day', hour1: 'Hour', minute1: 'Minute', second1: 'Second',
     firstRasm: 'The first ceremony: {date}{time} ({event})',
@@ -2718,6 +2728,7 @@ const Tour = (() => {
       ['wheel', 'touchmove'].forEach(ev => addEventListener(ev, onUserScrollIntent, { passive: true }));
       document.addEventListener('visibilitychange', () => { if (document.hidden && playing) pause(); });
     },
+    play(m) { start(m); },
     relabel() { if (mode) { buildBar(); } if (!menu().hidden) buildMenu(); }
   };
 })();
@@ -2738,6 +2749,14 @@ function init() {
   if (state.hostOn) Gallery.enableHost();
 
   document.addEventListener('click', e => { const b = e.target.closest('[data-lang-btn]'); if (b) setLang(b.dataset.langBtn, true); });
+  /* The two ways on from the first screen. */
+  const cueDown = $('#cueScroll');
+  if (cueDown) cueDown.addEventListener('click', () => {
+    const next = $('#main > section');
+    if (next) next.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' });
+  });
+  const cueAuto = $('#cueAuto');
+  if (cueAuto) cueAuto.addEventListener('click', () => Tour.play('cinema'));
   if (!Music.supported) $('#musicBtn').hidden = true;
   $('#musicBtn').addEventListener('click', () => { if (Music.playing) Music.stop(); else Music.start(); updateMusicBtn(); });
   /* Let the instrumental follow the guest down the page: whichever
