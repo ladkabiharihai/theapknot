@@ -360,6 +360,12 @@ html[lang="hi"] .parinay .word{font-family:"Amita",serif;font-size:clamp(2rem,8v
 .portrait-cap{margin-top:1.4rem;text-align:center;font-family:var(--script);font-size:1.7rem;color:var(--gold-2)}
 .strip-wrap{position:relative;margin-top:3rem}
 .strip{display:flex;gap:1.4rem;margin:0;padding:1rem 1.25rem 2rem;overflow-x:auto;list-style:none;scroll-snap-type:x mandatory;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+/* Centre the frames when they fit the width. 'safe' matters: a plain
+   centre on a scroller puts the leading photo out of reach once the
+   row overflows, which it always does on a phone. No fallback is
+   declared on purpose - a browser that cannot do this keeps the
+   left-aligned row rather than an unreachable one. */
+.strip{justify-content:safe center}
 .strip::-webkit-scrollbar{display:none}
 .strip li{flex:none;width:min(66vw,17rem);scroll-snap-align:center}
 .strip li:nth-child(odd) .ph-frame{transform:rotate(-1.4deg)}
