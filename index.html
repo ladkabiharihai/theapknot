@@ -181,7 +181,7 @@ html[lang="hi"] .opener-kicker{letter-spacing:.02em;text-transform:none;font-siz
 /* The last term keeps the whole opener on one screen: the card gives
    way once the viewport is too short for it, the kicker, the seal and
    the line beneath, so nothing has to be scrolled to. */
-.card3d{position:relative;width:max(14rem,min(88vw,31rem,56vh,calc(100vh - 28rem)));aspect-ratio:1;perspective:1800px;container-type:inline-size}
+.card3d{position:relative;width:max(12rem,min(88vw,34rem,60vh,calc(100vh - 21rem)));aspect-ratio:1;perspective:1800px;container-type:inline-size}
 .card-inside,.card-cover{position:absolute;inset:0}
 .card-inside{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3cqi;background:var(--card);color:var(--ink);box-shadow:var(--shadow);text-align:center}
 .card-inside .inv{font-family:"Amita",serif;font-size:6cqi;color:var(--rani)}
@@ -211,7 +211,11 @@ html[lang="hi"] .cv-names{font-family:"Rozha One",serif;font-weight:400;line-hei
 .opener.is-opening .seal .h2{transform:translate(14px,10px) rotate(18deg);opacity:0}
 @media (prefers-reduced-motion:no-preference){.opener:not(.is-opening) .seal{animation:pulse 2.8s ease-in-out infinite}}
 @keyframes pulse{50%{transform:translateX(-50%) scale(1.06)}}
-.opener-hint{margin-top:9cqi;color:var(--gold-3);font-size:1.05rem;text-align:center}
+/* Was 9cqi. The hint sits outside .card3d, the only element with a
+   container-type, so cqi fell back to the viewport width and booked
+   171px of empty curtain on a wide screen. It only has to clear the
+   seal, which hangs 8cqi below a card of at most 34rem. */
+.opener-hint{margin-top:3.25rem;color:var(--gold-3);font-size:1.05rem;text-align:center}
 .opener-quiet{min-height:44px;padding:.2rem .8rem;border:0;background:none;color:#D9C4B8;text-decoration:underline;text-underline-offset:.2em;cursor:pointer}
 .opener.is-opening .fade-out{opacity:0;transition:opacity .4s}
 
